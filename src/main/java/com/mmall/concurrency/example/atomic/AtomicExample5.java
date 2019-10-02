@@ -10,7 +10,11 @@ import java.util.concurrent.atomic.AtomicReference;
 @Slf4j
 @ThreadSafe
 public class AtomicExample5 {
-
+	/**
+	 * AtomicIntegerFieldUpdater
+	 * 核心思想: 更新某一个类里的volatile修饰的字段的值
+	 * 例如: 更新AtomicExample5.class里的count字段的值 --> updater.compareAndSet(example5, 100, 120)
+	 */
 	private static AtomicIntegerFieldUpdater<AtomicExample5> updater =
 			AtomicIntegerFieldUpdater.newUpdater(AtomicExample5.class, "count");
 
