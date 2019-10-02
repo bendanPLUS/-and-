@@ -22,11 +22,13 @@ public class ConcurrencyTest {
 
     public static void main(String[] args) throws Exception {
         ExecutorService executorService = Executors.newCachedThreadPool();
+        // 同时并发执行的线程数 用信号量
         final Semaphore semaphore = new Semaphore(threadTotal);
         final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
         for (int i = 0; i < clientTotal ; i++) {
             executorService.execute(() -> {
                 try {
+                    //只允许200线程同时执行 add方法
                     semaphore.acquire();
                     add();
                     semaphore.release();
@@ -36,6 +38,7 @@ public class ConcurrencyTest {
                 countDownLatch.countDown();
             });
         }
+        //countDownLatch.await()会阻塞当前线程,直到clientTotal减为0,当前线程才会执行
         countDownLatch.await();
         executorService.shutdown();
         log.info("count:{}", count);
