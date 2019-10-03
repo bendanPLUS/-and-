@@ -4,7 +4,10 @@ import java.util.Iterator;
 import java.util.Vector;
 
 public class VectorExample3 {
-
+    /**
+     * // foreach 和 iterator迭代器 遍历操作时不要进行remove(i)等修改操作
+     * @param v1
+     */
     // java.util.ConcurrentModificationException
     private static void test1(Vector<Integer> v1) { // foreach
         for(Integer i : v1) {
@@ -15,7 +18,7 @@ public class VectorExample3 {
     }
 
     // java.util.ConcurrentModificationException
-    private static void test2(Vector<Integer> v1) { // iterator
+    private static void test2(Vector<Integer> v1) { // iterator 迭代器
         Iterator<Integer> iterator = v1.iterator();
         while (iterator.hasNext()) {
             Integer i = iterator.next();
@@ -26,7 +29,7 @@ public class VectorExample3 {
     }
 
     // success
-    private static void test3(Vector<Integer> v1) { // for
+    private static void test3(Vector<Integer> v1) { // for循环
         for (int i = 0; i < v1.size(); i++) {
             if (v1.get(i).equals(3)) {
                 v1.remove(i);

@@ -42,12 +42,13 @@ public class CountExample1 {
 	}
 
 	private static void add() {
-		count++;
+
 		/**
 		 * count++; 相当于是复合操作
 		 * 1.想拿到count的值 int temp = count;
 		 * 2.进行加一操作 temp = temp + 1;
 		 * 3.把临时变量temp赋值给count count = temp;
 		 */
+		count++;
 	}
 }

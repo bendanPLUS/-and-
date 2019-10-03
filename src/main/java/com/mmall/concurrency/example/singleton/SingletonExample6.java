@@ -11,7 +11,7 @@ public class SingletonExample6 {
 
     // 私有构造函数
     private SingletonExample6() {
-
+        System.out.println("私有构造函数");
     }
 
     // 单例对象
