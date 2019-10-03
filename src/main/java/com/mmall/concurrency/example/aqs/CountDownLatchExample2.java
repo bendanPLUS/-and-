@@ -30,6 +30,7 @@ public class CountDownLatchExample2 {
                 }
             });
         }
+        //超时等待时间 过了这个时间 不管执行完成与否 要继续往下执行
         countDownLatch.await(10, TimeUnit.MILLISECONDS);
         log.info("finish");
         exec.shutdown();
