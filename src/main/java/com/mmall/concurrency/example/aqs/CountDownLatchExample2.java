@@ -33,6 +33,7 @@ public class CountDownLatchExample2 {
         //超时等待时间 过了这个时间 不管执行完成与否 要继续往下执行
         countDownLatch.await(10, TimeUnit.MILLISECONDS);
         log.info("finish");
+        //不是立即关闭 是已有的线程执行完成 再关闭线程池
         exec.shutdown();
     }
 
