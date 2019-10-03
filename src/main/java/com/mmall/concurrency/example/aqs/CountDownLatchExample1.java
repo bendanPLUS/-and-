@@ -9,34 +9,36 @@ import java.util.concurrent.Executors;
 @Slf4j
 public class CountDownLatchExample1 {
 
-    private final static int threadCount = 200;
+	private final static int threadCount = 200;
 
-    public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 
-        ExecutorService exec = Executors.newCachedThreadPool();
+		ExecutorService exec = Executors.newCachedThreadPool();
 
-        final CountDownLatch countDownLatch = new CountDownLatch(threadCount);
+		final CountDownLatch countDownLatch = new CountDownLatch(threadCount);
 
-        for (int i = 0; i < threadCount; i++) {
-            final int threadNum = i;
-            exec.execute(() -> {
-                try {
-                    test(threadNum);
-                } catch (Exception e) {
-                    log.error("exception", e);
-                } finally {
-                    countDownLatch.countDown();
-                }
-            });
-        }
-        countDownLatch.await();
-        log.info("finish");
-        exec.shutdown();
-    }
+		for (int i = 0; i < threadCount; i++) {
+			final int threadNum = i;
+			exec.execute(() -> {
+				try {
+					test(threadNum);
+				} catch (Exception e) {
+					log.error("exception", e);
+				} finally {
+					countDownLatch.countDown();
+				}
+			});
+		}
+		log.info("执行countDownLatch.await(); 方法前");
+		countDownLatch.await();
+		log.info("threadCount的值减为{},后序的操作才能继续 ,当前线程名字为{}",
+				countDownLatch.getCount(), Thread.currentThread().getName());
+		exec.shutdown();
+	}
 
-    private static void test(int threadNum) throws Exception {
-        Thread.sleep(100);
-        log.info("{}", threadNum);
-        Thread.sleep(100);
-    }
+	private static void test(int threadNum) throws Exception {
+		Thread.sleep(100);
+		log.info("{} , 当前线程名字为[{}] ", threadNum, Thread.currentThread().getName());
+		Thread.sleep(100);
+	}
 }
