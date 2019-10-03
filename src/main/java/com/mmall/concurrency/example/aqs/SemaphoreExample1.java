@@ -15,7 +15,7 @@ public class SemaphoreExample1 {
     public static void main(String[] args) throws Exception {
 
         ExecutorService exec = Executors.newCachedThreadPool();
-
+        //同一时间只如需三个线程并发执行
         final Semaphore semaphore = new Semaphore(3);
 
         for (int i = 0; i < threadCount; i++) {
@@ -35,6 +35,7 @@ public class SemaphoreExample1 {
 
     private static void test(int threadNum) throws Exception {
         log.info("{}", threadNum);
+        //等待1s
         Thread.sleep(1000);
     }
 }
