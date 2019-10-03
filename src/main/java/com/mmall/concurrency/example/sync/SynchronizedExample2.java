@@ -18,6 +18,7 @@ public class SynchronizedExample2 {
     }
 
     // 修饰一个静态方法
+    //synchronized修饰静态方法时，锁是类锁，也就是类名.class-->SynchronizedExample2.class
     public static synchronized void test2(int j) {
         for (int i = 0; i < 10; i++) {
             log.info("test2 {} - {}", j, i);

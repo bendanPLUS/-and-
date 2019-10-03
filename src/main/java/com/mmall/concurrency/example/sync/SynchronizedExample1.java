@@ -10,6 +10,7 @@ public class SynchronizedExample1 {
 
     // 修饰一个代码块
     public void test1(int j) {
+        //this是代表当前的对象 example1 example2 锁的对象不同
         synchronized (this) {
             for (int i = 0; i < 10; i++) {
                 log.info("test1 {} - {}", j, i);
@@ -29,10 +30,10 @@ public class SynchronizedExample1 {
         SynchronizedExample1 example2 = new SynchronizedExample1();
         ExecutorService executorService = Executors.newCachedThreadPool();
         executorService.execute(() -> {
-            example1.test2(1);
+            example1.test1(1);
         });
         executorService.execute(() -> {
-            example2.test2(2);
+            example2.test1(2);
         });
     }
 }

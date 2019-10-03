@@ -18,7 +18,9 @@ public class AtomicExample5 {
 	private static AtomicIntegerFieldUpdater<AtomicExample5> updater =
 			AtomicIntegerFieldUpdater.newUpdater(AtomicExample5.class, "count");
 
-	//count 必须是volatile类型 不然会会报错 java.lang.IllegalArgumentException: Must be volatile type
+	//count 必须是volatile 非static修饰的字段 不然会会报错
+	// 无volatile报 java.lang.IllegalArgumentException: Must be volatile type
+
 	@Getter
 	public volatile int count = 100;
 
