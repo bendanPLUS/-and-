@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 public class ThreadPoolExample3 {
 
     public static void main(String[] args) {
-
+        //单线程的线程池
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
         for (int i = 0; i < 10; i++) {

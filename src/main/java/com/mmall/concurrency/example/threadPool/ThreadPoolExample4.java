@@ -31,6 +31,7 @@ public class ThreadPoolExample4 {
         }, 1, 3, TimeUnit.SECONDS);
 //        executorService.shutdown();
 
+        //间隔5s继续执行
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
