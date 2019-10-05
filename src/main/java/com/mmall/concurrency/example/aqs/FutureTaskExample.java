@@ -17,7 +17,7 @@ public class FutureTaskExample {
                 return "Done";
             }
         });
-
+        //每次执行都要 new Thread新建对象 性能差
         new Thread(futureTask).start();
         log.info("do something in main");
         Thread.sleep(1000);

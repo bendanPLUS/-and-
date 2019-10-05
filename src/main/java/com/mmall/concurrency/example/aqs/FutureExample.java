@@ -24,8 +24,9 @@ public class FutureExample {
         ExecutorService executorService = Executors.newCachedThreadPool();
         Future<String> future = executorService.submit(new MyCallable());
         log.info("do something in main");
-        Thread.sleep(1000);
+        Thread.sleep(1000);//睡1s
         String result = future.get();
         log.info("result：{}", result);
+        executorService.shutdown();
     }
 }

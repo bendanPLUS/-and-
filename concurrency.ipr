@@ -127,7 +127,7 @@
       <module name="concurrency" target="1.8" />
     </bytecodeTargetLevel>
   </component>
-  <component name="Encoding">
+  <component name="Encoding" native2AsciiForPropertiesFiles="true">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
