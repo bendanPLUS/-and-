@@ -13,14 +13,7 @@ public class 剑指offer {
 		log.info("----log-----");
 	}
 
-	class ListNode {
-		int val;
-		ListNode next = null;
 
-		ListNode(int val) {
-			this.val = val;
-		}
-	}
 
 	//面试题16 数值的整数次方
 	@Test
