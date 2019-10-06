@@ -12,9 +12,6 @@ public class 剑指offer {
 		System.out.println("--------");
 		log.info("----log-----");
 	}
-
-
-
 	//面试题16 数值的整数次方
 	@Test
 	private double Power(double base, int exponent) {
