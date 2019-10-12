@@ -1,15 +1,29 @@
 package com.bendanplus.algorithm.剑指offer;
 
+import lombok.extern.slf4j.Slf4j;
+import java.util.Scanner;
+
 /**
  * 最长不含重复字符的子字符串
  * 请从字符串中找出一个最长的不含重复字符的子字符串
  * 测试地址:
  * https://www.nowcoder.com/practice/fafbd351003a499f9a80c3f641295f2a?tpId=101&tqId=33199&tPage=2&rp=2&ru=/ta/programmer-code-interview-guide&qru=/ta/programmer-code-interview-guide/question-ranking
  */
+@Slf4j
 public class 面试题48 {
+	public static void main(String[] args) {
 
+		Scanner in = new Scanner(System.in);
+		int n = in.nextInt();
+		StringBuilder sb  = new StringBuilder();
+		for (int i = 0; i < n; i++) {
+			sb.append(in.nextInt());
+		}
+		final int i = longestSubstringWithoutDuo(sb.toString());
+		log.info("结果等于 {}",i);
+	}
 
-	private int longestSubstringWithoutDuo(String str) {
+	private static int longestSubstringWithoutDuo(String str) {
 		if (str == null || str.length() == 0) {
 			return 0;
 		}
@@ -33,6 +47,4 @@ public class 面试题48 {
 		}
 		return maxDp;
 	}
-
-
 }
