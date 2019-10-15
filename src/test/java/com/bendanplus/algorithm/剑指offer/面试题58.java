@@ -45,5 +45,24 @@ public class 面试题58 {
 		}
 	}
 
-
+	/**
+	 * 左旋转字符串
+	 * Input:
+	 * S="abcXYZdef"
+	 * K=3 把前三个元素旋转到后面
+	 * <p>
+	 * Output:
+	 * "XYZdefabc"
+	 * 传送门:https://www.nowcoder.com/practice/12d959b108cb42b1ab72cef4d36af5ec?tpId=13&tqId=11196&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking
+	 */
+	public String LeftRotateString(String str, int n) {
+		if (str == null || str.trim().length() == 0 || n > str.length()) {
+			return str;
+		}
+		final char[] chars = str.toCharArray();
+		reverse(chars, 0, n - 1);
+		reverse(chars, n, chars.length - 1);
+		reverse(chars, 0, chars.length - 1);
+		return new String(chars);
+	}
 }
