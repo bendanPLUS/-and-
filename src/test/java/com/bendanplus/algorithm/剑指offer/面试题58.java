@@ -32,7 +32,6 @@ public class 面试题58 {
 		return new String(chars);
 	}
 
-
 	private void reverse(char[] chars, int left, int right) {
 		if (chars == null || chars.length == 0) {
 			return;
