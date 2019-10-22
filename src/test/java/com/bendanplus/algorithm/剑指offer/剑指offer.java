@@ -320,9 +320,9 @@ public class 剑指offer {
 
 	public ArrayList<Integer> printMatrix(int[][] matrix) {
 		//边界条件的判断
-		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+		if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
 			return null;
-		}
+
 		//行数
 		int rows = matrix.length;
 		//列数
@@ -331,31 +331,30 @@ public class 剑指offer {
 		while (rows > 2 * start && colums > 2 * start) {
 			printMatrix(matrix, rows, colums, start);
 			start++;
-
 		}
 		return arr;
 	}
 
+
 	private void printMatrix(int[][] matrix, int rows, int colums, int start) {
 		int endX = rows - 1 - start;
 		int endY = colums - 1 - start;
-		for (int i = start; i <= endY; i++) {
+		for (int i = start; i <= endY; i++)
 			arr.add(matrix[start][i]);
-		}
+
 		if (endX - start >= 1) {
-			for (int i = start + 1; i <= endX; i++) {
+			for (int i = start + 1; i <= endX; i++)
 				arr.add(matrix[i][endY]);
-			}
+
 		}
 		if (endX - start >= 1 && endY - start >= 1) {
-			for (int i = endY - 1; i >= start; i--) {
+			for (int i = endY - 1; i >= start; i--)
 				arr.add(matrix[endX][i]);
-			}
+
 		}
 		if (endX - start >= 2 && endY - start >= 1) {
-			for (int i = endX - 1; i >= start + 1; i--) {
+			for (int i = endX - 1; i >= start + 1; i--)
 				arr.add(matrix[i][start]);
-			}
 		}
 	}
 

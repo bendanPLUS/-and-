@@ -21,26 +21,21 @@ public class 面试题38 {
 		final ArrayList<String> res = Permutation("a");
 		log.info("结果:[{}]", res);
 	}
-
-
 	public ArrayList<String> Permutation(String str) {
-		ArrayList<String> array = new ArrayList<String>();
-		if (StringUtils.isBlank(str)) {
+		ArrayList<String> array = new ArrayList();
+		if (StringUtils.isBlank(str))
 			return array;
-		}
 		char[] chars = str.toCharArray();
-		int begin = 0;
-		Permutation001(chars, array, begin);
+		Permutation001(chars, array, 0);
 		Collections.sort(array);
 		return array;
 	}
-
+    //
 	private void Permutation001(char[] chars, ArrayList<String> array, int begin) {
 		if (begin == chars.length - 1) {
 			String str = String.valueOf(chars);
-			if (!array.contains(str)) {
+			if (!array.contains(str))
 				array.add(str);
-			}
 		} else {
 			for (int i = begin; i < chars.length; i++) {
 				swep(chars, begin, i);
@@ -49,11 +44,9 @@ public class 面试题38 {
 			}
 		}
 	}
-
 	private void swep(char[] chars, int i, int j) {
-		if (chars == null || chars.length == 0) {
+		if (chars == null || chars.length == 0)
 			return;
-		}
 		char temp = chars[i];
 		chars[i] = chars[j];
 		chars[j] = temp;

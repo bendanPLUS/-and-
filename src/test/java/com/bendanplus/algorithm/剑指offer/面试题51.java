@@ -48,9 +48,9 @@ public class 面试题51 {
 	private void sort(int[] array, int left, int mid, int right, int[] copy) {
 		int i = left, j = mid + 1, k = left;
 		while (i <= mid && j <= right) {
-			if (array[i] <= array[j]) {
+			if (array[i] <= array[j])
 				copy[k++] = array[i++];
-			} else {
+			else {
 				copy[k++] = array[j++];
 				//这个地方可能会出现重复计算
 				this.count += mid - i + 1;
