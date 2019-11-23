@@ -15,15 +15,15 @@ public class SemaphoreExample2 {
 
         ExecutorService exec = Executors.newCachedThreadPool();
 
-        final Semaphore semaphore = new Semaphore(3);
+        final Semaphore semaphore = new Semaphore(4);
 
         for (int i = 0; i < threadCount; i++) {
             final int threadNum = i;
             exec.execute(() -> {
                 try {
-                    semaphore.acquire(3); // 获取多个许可
+                    semaphore.acquire(2); // 获取多个许可
                     test(threadNum);
-                    semaphore.release(3); // 释放多个许可
+                    semaphore.release(2); // 释放多个许可
                 } catch (Exception e) {
                     log.error("exception", e);
                 }

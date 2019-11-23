@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j
 public class 剑指offer {
@@ -12,6 +13,7 @@ public class 剑指offer {
 		System.out.println("--------");
 		log.info("----log-----");
 	}
+
 	//面试题16 数值的整数次方
 	@Test
 	private double Power(double base, int exponent) {
@@ -286,8 +288,8 @@ public class 剑指offer {
 
 	//面试题27  输入一颗二叉树 该函数输出它的镜像
 	private void Mirror(TreeNode root) {
-		if (root == null) return;
-		if (root.left == null && root.right == null) return;
+		if (root == null || (root.left == null && root.right == null))
+			return;
 		TreeNode tmp = root.left;
 		root.left = root.right;
 		root.right = tmp;
@@ -298,6 +300,7 @@ public class 剑指offer {
 	}
 
 	//面试题28 判断一颗二叉树是不是对称的 如果一颗二叉树和他的镜像一样 那么他就是对称的二叉树
+	//空壳方法
 	private boolean isSymmetrical(TreeNode pRoot) {
 		return isSymmetrical(pRoot, pRoot);
 	}
@@ -316,7 +319,7 @@ public class 剑指offer {
 	}
 
 	//面试题29  输入一个矩阵 按照从外向里顺时针依次打印每个数字
-	ArrayList<Integer> arr = new ArrayList<>();
+	public static ArrayList<Integer> arr = new ArrayList<>();
 
 	public ArrayList<Integer> printMatrix(int[][] matrix) {
 		//边界条件的判断
@@ -403,35 +406,33 @@ public class 剑指offer {
 
 	//面试题32 题目一不分行从上到下打印二叉树
 	private ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
+		if (root == null)
+			return new ArrayList<>();
 		//存储的打印数据
 		ArrayList<Integer> list = new ArrayList<>();
 		Queue<TreeNode> queue = new LinkedList<>();
-		if (root == null) {
-			return list;
-		}
 		queue.add(root);
 		while (!queue.isEmpty()) {
 			//Retrieves and removes the head of this queue,
 			final TreeNode poll = queue.poll();
 			list.add(poll.val);
-			if (poll.left != null) {
+			if (poll.left != null)
 				queue.offer(poll.left);
-			}
-			if (poll.right != null) {
+			if (poll.right != null)
 				queue.offer(poll.right);
-			}
 		}
 		return list;
 	}
 
 	//面试题32 题目2 分行从上到下打印二叉树
 	private ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
+		if (pRoot == null)
+			return new ArrayList<ArrayList<Integer>>();
+
 		ArrayList<ArrayList<Integer>> list = new ArrayList<>();
 		ArrayList<Integer> tmp = new ArrayList<>();
 		LinkedList<TreeNode> node = new LinkedList<>();
-		if (pRoot == null) {
-			return list;
-		}
+
 		node.add(pRoot);
 		int start = 0;
 		int end = 1;

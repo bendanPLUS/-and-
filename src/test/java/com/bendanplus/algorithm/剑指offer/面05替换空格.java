@@ -26,7 +26,6 @@ public class 面05替换空格 {
 				str.setCharAt(newTail--, '%');
 			} else
 				str.setCharAt(newTail--, str.charAt(c));
-
 		}
 		//这是是出给C++人做的[奸笑] java用repaceAll
 		return str.toString().replaceAll(" ", "02%");

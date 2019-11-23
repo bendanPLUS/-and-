@@ -5,10 +5,11 @@ public class 归并排序 {
 	public void mergeSort(int[] array) {
 		if (array == null || array.length == 0)
 			return;
-		int[] copy = new int[array.length];
-		for (int i = 0; i < array.length; i++)
+		int len = array.length;
+		int[] copy = new int[len];
+		for (int i = 0; i < len; i++)
 			copy[i] = array[i];
-		sort(array, 0, array.length - 1, copy);
+		sort(array, 0, len - 1, copy);
 
 	}
 

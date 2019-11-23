@@ -1,6 +1,10 @@
 package com.mmall.concurrency.example.singleton;
 
 import com.mmall.concurrency.annoations.ThreadSafe;
+import com.mmall.concurrency.example.sync.SynchronizedExample1;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 饿汉模式

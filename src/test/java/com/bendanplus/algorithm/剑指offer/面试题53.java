@@ -3,6 +3,8 @@ package com.bendanplus.algorithm.剑指offer;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
+import java.util.HashMap;
+
 /**
  * 53. 统计一个数字在排序数组中出现的次数
  * 二分查找

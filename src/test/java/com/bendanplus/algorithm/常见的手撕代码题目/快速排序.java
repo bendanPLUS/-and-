@@ -3,6 +3,8 @@ package com.bendanplus.algorithm.常见的手撕代码题目;
 
 public class 快速排序 {
 	public void quickSort(int[] array, int low, int high) {
+		if (array == null || array.length == 0)
+			return;
 		int i, j, temp;
 		if (low >= high)
 			return;
@@ -25,7 +27,6 @@ public class 快速排序 {
 		swap(array, low, i);
 		quickSort(array, low, i - 1);
 		quickSort(array, i + 1, high);
-		return;
 	}
 
 	private void swap(int[] array, int i, int j) {

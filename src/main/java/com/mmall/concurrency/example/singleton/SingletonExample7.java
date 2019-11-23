@@ -10,27 +10,34 @@ import com.mmall.concurrency.annoations.ThreadSafe;
 @Recommend
 public class SingletonExample7 {
 
-    // 私有构造函数
-    private SingletonExample7() {
+	// 私有构造函数
+	private SingletonExample7() {
 
-    }
+	}
+	private static class SingletonExampleHolder {
+		private static SingletonExample7 instance = new SingletonExample7();
+	}
 
-    public static SingletonExample7 getInstance() {
+	public SingletonExample7 getInstance1() {
+		return SingletonExampleHolder.instance;
+	}
+
+	public static SingletonExample7 getInstance() {
         return Singleton.INSTANCE.getInstance();
-    }
+	}
 
-    private enum Singleton {
-        INSTANCE;
+	private enum Singleton {
+		INSTANCE;
 
-        private SingletonExample7 singleton;
+		private SingletonExample7 singleton;
 
-        // JVM保证这个方法绝对只调用一次
-        Singleton() {
-            singleton = new SingletonExample7();
-        }
+		// JVM保证这个方法绝对只调用一次
+		Singleton() {
+			singleton = new SingletonExample7();
+		}
 
-        public SingletonExample7 getInstance() {
-            return singleton;
-        }
-    }
+		public SingletonExample7 getInstance() {
+			return singleton;
+		}
+	}
 }
