@@ -14,11 +14,11 @@ import java.util.Collections;
  * 例如: abc 则打印出abc所排列出的所有字符串 abc acb bac bca cab cba
  */
 @Slf4j
-public class 面试题38 {
+public class 面试题38全排列 {
 
 	@Test
 	public void test面试题38() {
-		final ArrayList<String> res = Permutation("a");
+		final ArrayList<String> res = Permutation("abc");
 		log.info("结果:[{}]", res);
 	}
 	public ArrayList<String> Permutation(String str) {
