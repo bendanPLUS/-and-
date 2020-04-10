@@ -1,5 +1,6 @@
 package com.mmall.concurrency.example.JVM8_demo;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -18,16 +19,25 @@ public class StreamCollect {
 
 
     @Test
-    public void test(){
+    public void test() {
         new StreamCollect().group();
     }
 
+
+
+    //list排序
     public void group() {
         List<Order> original = new ArrayList<>();
         Order order = new Order();
         order.setId("1");
         order.setCompany("111");
         original.add(order);
+
+        order = new Order();
+        order.setId("3");
+        order.setCompany("222");
+        original.add(order);
+
         order = new Order();
         order.setId("2");
         order.setCompany("222");
@@ -36,11 +46,6 @@ public class StreamCollect {
         order = new Order();
         order.setId("1");
         order.setCompany("333");
-        original.add(order);
-
-        order = new Order();
-        order.setId("3");
-        order.setCompany("222");
         original.add(order);
 
         List<Function<Order, String>> list = new ArrayList<>();
@@ -63,6 +68,7 @@ public class StreamCollect {
 
 }
 
+@Data
 class Order {
     private String id;
     private String company;
