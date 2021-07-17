@@ -10,7 +10,7 @@ import java.util.HashMap;
  * 二分查找
  */
 @Slf4j
-public class 面试题53 {
+public class 面试题53_JZ37数字在升序数组中出现的次数 {
 	@Test
 	public void test() {
 		int[] nums = {1, 2, 3, 3, 3, 3};

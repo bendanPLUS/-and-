@@ -13,7 +13,7 @@ import org.junit.Test;
 
 //TODO 结果不对有问题 需要看一下 递归排序没问题
 @Slf4j
-public class 面试题51 {
+public class 面试题51_JZ35数组中的逆序对 {
 
 	//就是归并排序
 	private int[] copy;
