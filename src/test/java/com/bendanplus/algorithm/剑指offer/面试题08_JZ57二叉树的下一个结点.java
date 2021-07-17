@@ -6,7 +6,7 @@ import java.util.*;
  * 给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。
  * 注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
  */
-public class 面08二叉树的下一个结点 {
+public class 面试题08_JZ57二叉树的下一个结点 {
 
 	public TreeLinkNode GetNext(TreeLinkNode pNode) {
 		if (pNode == null)
@@ -23,6 +23,36 @@ public class 面08二叉树的下一个结点 {
 				if (pNode.next.left == pNode)
 					return pNode.next;
 				pNode = pNode.next;
+			}
+		}
+		return null;
+	}
+
+
+	public TreeLinkNode GetNext1(TreeLinkNode pNode) {
+		if (pNode == null)
+			return pNode;
+		//三种情况
+		//第一种情况： pNode如果有右子树 则右子树的最左节点就是 下一个节点  如果没有左节点 就是自己
+		if (pNode.right != null) {
+			TreeLinkNode node = pNode.right;
+			while (node.left != null)
+				node = node.left;
+			return node;
+		}
+		//第二种第三种情况都是 pNode没有右子树情况
+		else if (pNode.next != null) {
+			//第二钟 无右子树，且结点是该结点父结点的左子树 则下一结点是该结点的父结点
+			if (pNode.next.left == pNode)
+				return pNode.next;
+			//第三钟 无右子树，且结点是该结点父结点的右子树 则我们一直沿着父结点追朔，直到找到某个结点是其父结点的左子树
+			else {
+				//如果右子树为null
+				while (pNode.next != null) {
+					if (pNode.next.left == pNode)
+						return pNode.next;
+					pNode = pNode.next;
+				}
 			}
 		}
 		return null;

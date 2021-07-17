@@ -1,7 +1,7 @@
 package com.bendanplus.algorithm.剑指offer;
 
 //https://www.nowcoder.com/practice/623a5ac0ea5b4e5f95552655361ae0a8?tpId=13&tqId=11203&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking&from=cyc_github
-public class 面试题3_JZ50数组中重复的数字 {
+public class 面试题03_JZ50数组中重复的数字 {
 	/**
 	 * 思路 循环 判断nuns[i]!=i 就把nuns[i]的值放到i处
 	 * 遍历到某个位置时重复的数字肯定会发生nums[i] != i 并且 nums[i]==nums[nums[i]]
