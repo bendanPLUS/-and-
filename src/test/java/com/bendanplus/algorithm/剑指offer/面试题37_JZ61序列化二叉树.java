@@ -3,7 +3,7 @@ package com.bendanplus.algorithm.剑指offer;
 /**
  * 请实现两个函数,分别用来序列化和反序列化二叉树
  */
-public class 面试题37 {
+public class 面试题37_JZ61序列化二叉树 {
 	int index = -1;
 	String Serialize(TreeNode root) {
 		StringBuffer res = new StringBuffer();
