@@ -1,4 +1,4 @@
-package com.mmall.concurrency.hashmap源码分析;
+package com.mmall.concurrency.JDKSourceAnalysis;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -159,9 +159,10 @@ public class MyHashMap<K, V>  {
 				}
 			}
 			/**
-			 * 如果是已经存在的
-			 * 则直接复制
+			 * e=p的key与要插入的key一样 内存地址一样 内容也一样
+			 * 在这里做覆盖操作
 			 * 并返回旧值
+			 * onlyIfAbsent 默认是false return putVal(hash(key), key, value, onlyIfAbsent -> false, true);
 			 */
 			if (e != null) { // existing mapping for key
 				V oldValue = e.value;
@@ -171,6 +172,7 @@ public class MyHashMap<K, V>  {
 				return oldValue;
 			}
 		}
+
 		if (++size > threshold)
 			resize();
 //        afterNodeInsertion(evict);
@@ -251,7 +253,7 @@ public class MyHashMap<K, V>  {
 					oldCap >= DEFAULT_INITIAL_CAPACITY)
 			/**
 			 *
-			 * 表容量扩大两倍
+			 * newCap容量扩大两倍
 			 * 如果表容量没超过最大阈值 并且 第一次就设置过大于默认最小hash表长或者已经扩容过了
 			 * 则把容量阈值也扩大两倍
 			 */
@@ -320,12 +322,14 @@ public class MyHashMap<K, V>  {
 						Node<K, V> next;
 						do {
 							next = e.next;
+							//判断新增加的1bit是0还是1 0还在原来的位置
 							if ((e.hash & oldCap) == 0) {
 								if (loTail == null)
 									loHead = e;
 								else
 									loTail.next = e;
 								loTail = e;
+								//判断新增加的1bit是0还是1 1放到新的位置table[原来的位置+老容量]
 							} else {
 								if (hiTail == null)
 									hiHead = e;

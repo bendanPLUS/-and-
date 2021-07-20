@@ -7,7 +7,7 @@ import com.alibaba.excel.write.handler.WriteHandler;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
-import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
+import com.mmall.concurrency.JDKSourceAnalysis.MyHashMap;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -41,6 +41,18 @@ public class Test001 {
 				.sheet("注解⽅式")
 				.registerWriteHandler(createTableStyle())// Excel 表格样式
 				.doWrite(dataList());
+	}
+
+	@Test
+	public void test007() {
+		MyHashMap<Integer,Object> test = new MyHashMap<Integer,Object>();
+		test.put(1,"11111");
+		test.put(1,"7");
+		test.put(2,"22222");
+		test.put(3,"33333");
+		test.put(4,"44444");
+		test.put(5,"555555");
+
 	}
 
 
