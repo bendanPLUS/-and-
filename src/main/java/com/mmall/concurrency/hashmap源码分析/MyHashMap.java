@@ -28,7 +28,7 @@ public class MyHashMap<K, V>  {
 
 	/**
 	 * HashMap整个容量的负载因子
-	 * 默认0.75
+	 * 默认0.75    大于容量的0.75倍就扩容
 	 */
 	final float loadFactor;
 	/**
@@ -88,6 +88,7 @@ public class MyHashMap<K, V>  {
 			throw new IllegalArgumentException("Illegal load factor: " +
 					loadFactor);
 		this.loadFactor = loadFactor;
+		//tableSizeFor(initialCapacity)含义:最接近的2^n数  initialCapacity>=2^n
 		this.threshold = tableSizeFor(initialCapacity);
 	}
 	//=========================构造器==========================
@@ -112,7 +113,13 @@ public class MyHashMap<K, V>  {
 			n = (tab = resize()).length;
 		}
 		//假设n=16 , 那么key的hash值只有后四位参与的运算 所以让key的高十六位和低十六位进行异或运算可以让节点node更均匀的分配(tab[])
-		if ((p = tab[i = (n - 1) & hash]) == null)
+		/**
+		 * 如果没有hash碰撞则会直接插入元素。如果线程A和线程B同时进行put操作，刚好这两条不同的数据hash值一样，并且该位置数据为null，
+		 * 所以这线程A、B都会进入第6行代码中。假设一种情况，线程A进入后还未进行数据插入时挂起，而线程B正常执行，从而正常插入数据，
+		 * 然后线程A获取CPU时间片，此时线程A不用再进行hash判断了，问题出现：线程A会把线程B插入的数据给覆盖，发生线程不安全
+		 */
+		//TODO 多个线程同时走到,再往下执行,就会覆盖上一个操作添加的元素, 造成元素丢失
+		if ((p = tab[i = (n - 1) & hash]) == null)// 如果没有hash碰撞则直接插入元素
 			//如果表当前桶没有节点，则直接添加(第一个)
 			tab[i] = newNode(hash, key, value, null);
 		else {
@@ -132,7 +139,7 @@ public class MyHashMap<K, V>  {
 			else {
 				//普通链表节点
 				for (int binCount = 0; ; ++binCount) {
-					if ((e = p.next) == null) {
+					if ((e = p.next) == null) {//TODO 多个线程同时走到,再往下执行,就会覆盖上一个操作添加的元素, 造成元素丢失
 						//先把新节点插入到链表最后
 						p.next = newNode(hash, key, value, null);
 						/**
@@ -221,7 +228,7 @@ public class MyHashMap<K, V>  {
 	 * @return
 	 */
 	final Node<K, V>[] resize() {
-
+		//需要扩容的老table
 		Node<K, V>[] oldTab = table;
 		//老的table[]数组的长度
 		int oldCap = (oldTab == null) ? 0 : oldTab.length;
@@ -273,8 +280,8 @@ public class MyHashMap<K, V>  {
 		}
 		threshold = newThr;
 		@SuppressWarnings({"rawtypes", "unchecked"})
-		Node<K, V>[] newTab = (Node<K, V>[]) new Node[newCap];
-		table = newTab;
+		Node<K, V>[] newTab = (Node<K, V>[]) new Node[newCap];// TODO
+		table = newTab;// TODO 此时实例变量table是空的 如果此时另一个线程执行get时，就会get出null
 		if (oldTab != null) {
 			/**
 			 * 遍历老hash表
@@ -341,6 +348,9 @@ public class MyHashMap<K, V>  {
 		}
 		return newTab;
 	}
+
+
+
 	//=========================特色方法==========================
 
 	//=========================删除==========================
