@@ -7,10 +7,10 @@ import com.mmall.concurrency.annoations.ThreadSafe;
  * 单例实例在第一次使用时进行创建
  */
 @ThreadSafe
-public class SingletonExample5 {
+public class SafeDoubleCheckLocking双重检验锁 {
 
     // 私有构造函数
-    private SingletonExample5() {
+    private SafeDoubleCheckLocking双重检验锁() {
 
     }
 
@@ -19,14 +19,14 @@ public class SingletonExample5 {
     // 3、instance = memory 设置instance指向刚分配的内存
 
     // 单例对象 volatile + 双重检测机制 -> 禁止指令重排
-    private volatile static SingletonExample5 instance = null;
+    private volatile static SafeDoubleCheckLocking双重检验锁 instance = null;
 
     // 静态的工厂方法
-    public static SingletonExample5 getInstance() {
+    public static SafeDoubleCheckLocking双重检验锁 getInstance() {
         if (instance == null) { // 双重检测机制        // B
-            synchronized (SingletonExample5.class) { // 同步锁
+            synchronized (SafeDoubleCheckLocking双重检验锁.class) { // 同步锁
                 if (instance == null) {
-                    instance = new SingletonExample5(); // A - 3
+                    instance = new SafeDoubleCheckLocking双重检验锁(); // A - 3
                 }
             }
         }

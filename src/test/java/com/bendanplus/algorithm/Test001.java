@@ -13,10 +13,13 @@ import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.junit.Test;
+import sun.misc.Unsafe;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
 @Slf4j
 public class Test001 {
 
@@ -45,7 +48,8 @@ public class Test001 {
 
 	@Test
 	public void test007() {
-		MyHashMap<Integer,Object> test = new MyHashMap<Integer,Object>();
+
+		ConcurrentHashMap<Integer,Object> test = new ConcurrentHashMap<Integer,Object>();
 		test.put(1,"11111");
 		test.put(1,"7");
 		test.put(2,"22222");
