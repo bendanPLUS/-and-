@@ -14,16 +14,21 @@ public class SingletonExample7 {
 	private SingletonExample7() {
 
 	}
+
 	private static class SingletonExampleHolder {
 		private static SingletonExample7 instance = new SingletonExample7();
 	}
 
+	//静态内部类画
+	//首次调用getInstance1 才进行SingletonExampleHolder初始化
 	public SingletonExample7 getInstance1() {
 		return SingletonExampleHolder.instance;
 	}
 
+
+	//枚举
 	public static SingletonExample7 getInstance() {
-        return Singleton.INSTANCE.getInstance();
+		return Singleton.INSTANCE.getInstance();
 	}
 
 	private enum Singleton {

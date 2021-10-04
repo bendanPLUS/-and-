@@ -13,7 +13,7 @@ public class SafeDoubleCheckLocking双重检验锁 {
     private SafeDoubleCheckLocking双重检验锁() {
 
     }
-
+    //TODO new一个对象等三个步骤 可能会发生重排序 加入volatile修饰禁止123重排序
     // 1、memory = allocate() 分配对象的内存空间
     // 2、ctorInstance() 初始化对象
     // 3、instance = memory 设置instance指向刚分配的内存
