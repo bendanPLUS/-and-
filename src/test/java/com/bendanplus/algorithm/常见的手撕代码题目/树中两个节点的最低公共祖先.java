@@ -37,5 +37,15 @@ public class 树中两个节点的最低公共祖先 {
 		final TreeNode left = lowestCommonAncestor2(root.left, p, q);
 		final TreeNode right = lowestCommonAncestor2(root.right, p, q);
 		return left == null ? right : (right == null ? left : root);
+
+		//TODO
+		/** left == null ? right : (right == null ? left : root);
+		 *  可分解为两步
+		 *  1.
+		 *  if (left != null && right != null)
+		 * 			return root;
+		 *  2.
+		 *  return left == null ? right : left;
+		 */
 	}
 }
