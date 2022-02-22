@@ -1,4 +1,4 @@
-package com.bendanplus.algorithm.程序员代码面试指南.第四章递归和动态规划;
+package com.bendanplus.algorithm.程序员代码面试指南.第4章递归和动态规划;
 
 /**
  * 给定N个数,返回斐波那契数列的第N项

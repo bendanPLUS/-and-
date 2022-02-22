@@ -1,4 +1,4 @@
-package com.bendanplus.algorithm.程序员代码面试指南.第三章二叉树;
+package com.bendanplus.algorithm.程序员代码面试指南.第3章二叉树;
 
 import java.io.BufferedReader;
 import java.io.IOException;
