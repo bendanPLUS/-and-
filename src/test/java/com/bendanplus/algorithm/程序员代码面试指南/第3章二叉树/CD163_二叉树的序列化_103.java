@@ -48,7 +48,9 @@ public class CD163_二叉树的序列化_103 {
 
 	//前序遍历 实现反序列化
 	public TreeNode reconByPreString(String preStr) {
-		final String[] split = preStr.split("!");
+		//str= "12！3！#！#！#！"
+
+		final String[] split = preStr.split("!");// [12,3,#,#,#]
 		Queue<String> queue = new LinkedList<>();
 		for (String str : split)
 			queue.add(str);
@@ -65,6 +67,7 @@ public class CD163_二叉树的序列化_103 {
 		return root;
 	}
 
+	//层遍历 序列化
 	public static StringBuilder levelOrder(TreeNode node) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(node.val + "!");
@@ -96,6 +99,7 @@ public class CD163_二叉树的序列化_103 {
 		//前序遍历 实现序列化
 		String preOrderRes = serialByPre(node, sb);
 		System.out.println(preOrderRes);
+
 		StringBuilder levelOrderRes = levelOrder(node);
 		System.out.println(levelOrderRes);
 	}
