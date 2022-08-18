@@ -1,5 +1,20 @@
 # Default ignored files
 /concurrency.iws
-
+.DS_Store
+bin/
+*.pyc
+.idea
+.gradle
+build
+java.iml
+.classpath
+.project
+.settings
+.cache-main
+target
+out
+*.iml
+lib
 # Project exclude paths
 /target/
+/src/main/java/com/mmall/concurrency/JDKSourceAnalysis
