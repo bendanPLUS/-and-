@@ -6,6 +6,10 @@ import java.io.InputStreamReader;
 
 public class CD164_遍历二叉树的神级方法_107 {
 
+
+	/**
+	 * 先序遍历
+	 */
 	public static void preOrder(Node root) {
 		if (null == root) {
 			return;
@@ -59,6 +63,10 @@ public class CD164_遍历二叉树的神级方法_107 {
 //              root = root.left;
 //				sb.append(root.value).append(" ");
 //				root = root.right;
+
+	/**
+	 * 中序遍历
+	 */
 	public static void inOrder(Node root) {
 		if (null == root) {
 			return;
@@ -66,26 +74,33 @@ public class CD164_遍历二叉树的神级方法_107 {
 		StringBuilder sb = new StringBuilder();
 		while (root != null) {
 			Node mostRight = root.left;
+
 			if (mostRight != null) {
+
 				while (mostRight.right != null && mostRight.right != root) mostRight = mostRight.right;
+
 				if (mostRight.right == null) {
 					mostRight.right = root;
 					root = root.left;
 					continue;
 				}
-				if (mostRight.right == root) {
-					mostRight.right = null;
-				}
+
+				if (mostRight.right == root) mostRight.right = null;
 				sb.append(root.value).append(" ");
+				//通过root的右指针进行移动
 				root = root.right;
 			}
-
 		}
 		System.out.println(sb.toString());
 	}
 
+
 	//后序 有左子树第二次到达时 逆序打印数的右边界 + 打印整棵树的右边界
 	//后序 有左子树第二次到达时 逆序打印数的右边界 + 打印整棵树的右边界
+
+	/**
+	 * 后序遍历
+	 */
 	public static void postOrder(Node root) {
 		if (null == root) {
 			return;
