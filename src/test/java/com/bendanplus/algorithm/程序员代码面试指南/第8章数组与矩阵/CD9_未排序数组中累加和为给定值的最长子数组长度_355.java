@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class CD9_未排序数组中累加和为给定值的最长子数组长度 {
+public class CD9_未排序数组中累加和为给定值的最长子数组长度_355 {
 	public static int maxLength(int[] arr, int k) {
 
 		if (arr == null || arr.length == 0) {

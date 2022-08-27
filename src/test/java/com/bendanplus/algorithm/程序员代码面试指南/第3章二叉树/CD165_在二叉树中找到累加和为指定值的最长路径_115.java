@@ -6,7 +6,7 @@ import java.io.StreamTokenizer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CD165_在二叉树中找到累加和为指定值的最长路径 {
+public class CD165_在二叉树中找到累加和为指定值的最长路径_115 {
 
 
 	private static int res = 0;
