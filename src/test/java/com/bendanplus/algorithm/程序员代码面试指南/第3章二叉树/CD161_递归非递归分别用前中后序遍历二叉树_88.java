@@ -76,7 +76,7 @@ public class CD161_递归非递归分别用前中后序遍历二叉树_88 {
 		System.out.println("in-order 中序遍历");
 		Stack<TreeNode> stack = new Stack<>();
 		//只要有一个满足条件即可
-		while (!stack.empty() || head != null) {
+		while (head != null || !stack.empty()) {
 			//步骤1:现将head的所有左子节点遍历进入栈
 			while (head != null) {
 				stack.add(head);
@@ -90,16 +90,16 @@ public class CD161_递归非递归分别用前中后序遍历二叉树_88 {
 			}
 		}
 		/**
-			while (!stack.empty() || head != null) {
-				if (head != null) {
-					stack.add(head);
-					head = head.left;
-				} else {
-					head = stack.pop();
-					System.out.print(head.val + " ");
-					head = head.right;
-				}
-			}
+		 while (!stack.empty() || head != null) {
+		 if (head != null) {
+		 stack.add(head);
+		 head = head.left;
+		 } else {
+		 head = stack.pop();
+		 System.out.print(head.val + " ");
+		 head = head.right;
+		 }
+		 }
 		 */
 		System.out.println("");
 	}
