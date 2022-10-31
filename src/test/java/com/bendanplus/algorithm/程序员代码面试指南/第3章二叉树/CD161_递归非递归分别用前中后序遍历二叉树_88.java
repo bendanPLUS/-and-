@@ -5,7 +5,7 @@ import com.bendanplus.algorithm.剑指offer.TreeNode;
 
 import java.util.Stack;
 
-public class CD161_递归非递归分别用前中后序遍历二叉树 {
+public class CD161_递归非递归分别用前中后序遍历二叉树_88 {
 
 
 	/**
@@ -21,25 +21,6 @@ public class CD161_递归非递归分别用前中后序遍历二叉树 {
 		preOrderRecur(head.left);
 		//右节点
 		preOrderRecur(head.right);
-	}
-
-
-	public void preOrderUnRecur(TreeNode head) {
-		System.out.println("pre-order 前序遍历");
-		if (head != null) {
-			//申请个栈用于存储数据
-			Stack<TreeNode> stack = new Stack();
-			stack.add(head);
-			while (!stack.empty()) {
-				//弹出一个元素
-				final TreeNode cur = stack.pop();
-				//打印弹出的元素
-				System.out.println(cur.val + "");
-				if (cur.right != null) stack.add(cur.right);
-				if (cur.left != null) stack.add(cur.left);
-			}
-			System.out.println("");
-		}
 	}
 
 	//中序递归遍历
@@ -71,12 +52,44 @@ public class CD161_递归非递归分别用前中后序遍历二叉树 {
 	 *
 	 * @param head
 	 */
+	//非递归 前序遍历  弹出节点后 先插入右孩 再插入左孩
+	public void preOrderUnRecur(TreeNode head) {
+		if (head == null) return;
+		System.out.println("pre-order 前序遍历");
+		//申请个栈用于存储数据
+		Stack<TreeNode> stack = new Stack();
+		stack.add(head);
+		while (!stack.empty()) {
+			//弹出一个元素
+			final TreeNode cur = stack.pop();
+			//打印弹出的元素
+			System.out.println(cur.val + "");
+			if (cur.right != null) stack.add(cur.right);
+			if (cur.left != null) stack.add(cur.left);
+		}
+		System.out.println("");
+	}
+
 	//中序非递归遍历
 	public void inOrderUnRecur(TreeNode head) {
+		if (head == null) return;
 		System.out.println("in-order 中序遍历");
-		if (head != null) {
-			Stack<TreeNode> stack = new Stack<>();
-			//只要有一个满足条件即可
+		Stack<TreeNode> stack = new Stack<>();
+		//只要有一个满足条件即可
+		while (!stack.empty() || head != null) {
+			//步骤1:现将head的所有左子节点遍历进入栈
+			while (head != null) {
+				stack.add(head);
+				head = head.left;
+			}
+			//步骤2：然后右子树重复 步骤1
+			if (!stack.empty()) {
+				head = stack.pop();
+				System.out.print(head.val + " ");
+				head = head.right;
+			}
+		}
+		/**
 			while (!stack.empty() || head != null) {
 				if (head != null) {
 					stack.add(head);
@@ -87,8 +100,8 @@ public class CD161_递归非递归分别用前中后序遍历二叉树 {
 					head = head.right;
 				}
 			}
-			System.out.println("");
-		}
+		 */
+		System.out.println("");
 	}
 
 	//后续非递归遍历
