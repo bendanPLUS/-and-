@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StreamTokenizer;
 
-public class CD175在二叉树中找到一个节点的后继节点 {
+/**
+ * 二叉树中一个节点的后继节点指的是，二叉树的中序遍历的序列中的下一个节点。
+ */
+public class CD175_在二叉树中找到一个节点的后继节点_151_剑指面8_65 {
 
 	private static StreamTokenizer st = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
 
@@ -13,6 +16,7 @@ public class CD175在二叉树中找到一个节点的后继节点 {
 		try {
 			st.nextToken();
 			return (int) st.nval;
+
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -30,15 +34,11 @@ public class CD175在二叉树中找到一个节点的后继节点 {
 	}
 
 	public static TreeNode getSuccessorNode(TreeNode node) {
-		if (node == null) {
-			return node;
-		}
+		if (node == null) return node;
 
 		//如果node有右子树，那么后继节点就是右子树的最左节点
-		if (node.right != null) {
-			return getMostLeft(node.right);
-		}
-		//如果node没有有右子树， 则一直向上寻找一个 父节点是子节点的左节点 parent.left == node
+		if (node.right != null) return getMostLeft(node.right);
+			//如果node没有有右子树， 则一直向上寻找一个 父节点是子节点的左节点 parent.left == node
 		else {
 			TreeNode parent = node.parent;
 			//如果node不是父节点的左节点 就一直向上遍历
@@ -52,13 +52,8 @@ public class CD175在二叉树中找到一个节点的后继节点 {
 	}
 
 	public static TreeNode getMostLeft(TreeNode node) {
-		if (node == null) {
-			return node;
-		}
-
-		while (node.left != null) {
-			node = node.left;
-		}
+		if (node == null) return null;
+		while (node.left != null) node = node.left;
 		return node;
 	}
 
