@@ -1,7 +1,8 @@
 package com.bendanplus.algorithm.程序员代码面试指南.第3章二叉树;
 
-public class CD174加_已知前序遍历和中序遍历结果重新建立二叉树_150_剑指面7_62 {
+public class CD179加_先序中序后序数组两两组和重构二叉树_171_剑指面7_62 {
 
+	//已知前序遍历和中序遍历结果重新建立二叉树
 	public TreeNode generateTree(int[] pre, int[] in) {
 		if (pre == null || in == null) return null;
 		return generate(pre, 0, pre.length - 1, in, 0, in.length - 1);
