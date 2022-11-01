@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.StreamTokenizer;
 
-public class CD176在二叉树中找到两个节点的最近公共祖先 {
+public class CD176_在二叉树中找到两个节点的最近公共祖先_153 {
 
 	static Node findCommonRoot(Node node, int t1, int t2) {
 		if (node == null || node.val == t1 || node.val == t2)
