@@ -32,6 +32,9 @@ public class Test001 {
 				.sheet("注解⽅式")
 				.registerWriteHandler(createTableStyle())// Excel 表格样式
 				.doWrite(dataList());
+
+
+
 	}
 
 	@Test

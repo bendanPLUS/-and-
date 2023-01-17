@@ -60,6 +60,7 @@ public class CD12_换钱的最少货币数_192 {
 	//代码指南里的解法1
 	//dp[i][j]: 前i个货币组成价值j所需要得到最少货币数量
 	//dp[i][j] = min{dp[i-1][j],dp[i][j-arr[i]]+1}
+	//TODO 需要优化！！
 	public static int minCoins(int[] arr, int aim) {
 		if (arr == null || arr.length <= 0 || aim < 0) return -1;
 		int n = arr.length;
@@ -82,7 +83,11 @@ public class CD12_换钱的最少货币数_192 {
 		return dp[n - 1][aim] != max ? dp[n - 1][aim] : -1;
 	}
 
-
+	//动态规划求解：
+	// dp[x]表示凑出x金额时的最优解，外层循环是各个面额的钱coins[i]，
+	// 内层循环就是目标金额j。可以知道，在遍历不同面额coins[i]时，
+	// 如果我们选择coins[i]这个面额，那我们就是在dp[j-coins[i]]的最优解上加一个coins[i]面额的钱，
+	// 否则就还是之前的值dp[j]不变。于是写出状态转移方程：dp[j] = min(dp[j], dp[j - coins[i]] + 1)
 	public static int process4(int[] arr, int aim) {
 		int[] dp = new int[aim + 1];
 		for (int j = 1; j < aim + 1; j++) {
