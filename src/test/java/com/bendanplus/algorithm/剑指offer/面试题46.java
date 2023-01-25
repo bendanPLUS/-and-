@@ -29,11 +29,11 @@ public class 面试题46 {
 		int g = 1;
 		for (int i = str.length() - 2; i >= 0; i--) {
 			if (Integer.parseInt(str.charAt(i) + "" + str.charAt(i + 1)) <= 25
-					&& Integer.parseInt(str.charAt(i) + "" + str.charAt(i + 1)) >= 10) {
+					&& Integer.parseInt(str.charAt(i) + "" + str.charAt(i + 1)) >= 10)
 				g = 1;
-			} else {
+			else
 				g = 0;
-			}
+
 			dp[i] = dp[i + 1] + (g * dp[i + 2]);
 		}
 		return dp[0];

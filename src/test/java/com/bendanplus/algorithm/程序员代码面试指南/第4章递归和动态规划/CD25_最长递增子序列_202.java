@@ -14,7 +14,35 @@ public class CD25_最长递增子序列_202 {
 		for (int i = 0; i < n; i++) {
 			arr[i] = Integer.parseInt(s[i]);
 		}
-		lengthOfLIS(arr);
+		int[] getdp2 = getdp2(arr);
+	}
+
+	public static int[] getdp2(int[] arr) {
+		//dp[i] 以i为结尾的 最长递增子序列的长度
+		int[] dp = new int[arr.length];
+		int[] ends = new int[arr.length];
+		ends[0] = arr[0];
+		dp[0] = 1;
+		int right = 0;
+		int l = 0;
+		int r = 0;
+		int m = 0;
+		for (int i = 1; i < arr.length; i++) {
+			l = 0;
+			r = right;
+			while (l <= r) {
+				m = (l + r) / 2;
+				if (arr[i] > ends[m]) {
+					l = m + 1;
+				} else {
+					r = m - 1;
+				}
+			}
+			right = Math.max(right, l);
+			ends[l] = arr[i];
+			dp[i] = l + 1;
+		}
+		return dp;
 	}
 
 

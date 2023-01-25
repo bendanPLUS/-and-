@@ -1,5 +1,7 @@
 package com.bendanplus.algorithm.程序员代码面试指南.第4章递归和动态规划;
+
 import java.util.Scanner;
+
 /**
  * 描述
  * 给定一个 n * m 的矩阵 a，从左上角开始每次只能向右或者向下走，最后到达右下角的位置，
@@ -31,6 +33,29 @@ public class CD186_矩阵的最小路径和_188 {
 		return dp[grid.length - 1][grid[0].length - 1];
 	}
 
+	public static int minPathSum2(int[][] m) {
+		if (m == null || m.length == 0 || m[0].length == 0) return 0;
+		int more = Math.max(m.length, m[0].length);
+		int less = Math.min(m.length, m[0].length);
+		boolean rowMore = more == m.length;
+		int[] arr = new int[less];
+
+		arr[0] = m[0][0];
+		for (int i = 1; i < less; i++)
+			arr[i] = arr[i - 1] + (rowMore ? m[0][i] : m[i][0]);
+		for (int i = 1; i < more; i++) {
+			arr[0] = arr[0] + (rowMore ? m[0][i] : m[i][0]);
+			for (int j = 1; j < less; j++) {
+				arr[j] = Math.min(arr[j], arr[j - 1]) + (rowMore ? m[i][j] : m[j][i]);
+			}
+		}
+		return arr[less - 1];
+	}
+
+	public static int minPathSum3(int[][] grid) {
+		return minPathSum2(grid);
+	}
+
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int n = sc.nextInt();
@@ -41,6 +66,6 @@ public class CD186_矩阵的最小路径和_188 {
 				arr[i][j] = sc.nextInt();
 			}
 		}
-		System.out.println(minPathSum(arr));
+		System.out.println(minPathSum2(arr));
 	}
 }
