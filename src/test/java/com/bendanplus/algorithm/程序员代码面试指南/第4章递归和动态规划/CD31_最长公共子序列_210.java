@@ -61,4 +61,34 @@ public class CD31_最长公共子序列_210 {
 		}
 		return String.valueOf(res);
 	}
+
+	public static String lcse2(String str1, String str2) {
+		if (str1 == null || str2 == null || str1.equals("") || str2.equals("")) return null;
+		char[] chars1 = str1.toCharArray();
+		char[] chars2 = str2.toCharArray();
+
+		int row = 0;
+		int col = chars2.length - 1;
+		int max = 0;
+		int end = 0;
+
+		while (row < chars1.length) {
+			int i = row;
+			int j = col;
+			int len = 0;
+			while (i < chars1.length && j < chars2.length) {
+				if (chars1[i] == chars2[j]) len++;
+				else len = 0;
+				if (len > max) {
+					max = len;
+					end = i;
+				}
+				i++;
+				j++;
+			}
+			if (col > 0) col--;
+			else row++;
+		}
+		return str1.substring(end - max + 1, end + 1);
+	}
 }
