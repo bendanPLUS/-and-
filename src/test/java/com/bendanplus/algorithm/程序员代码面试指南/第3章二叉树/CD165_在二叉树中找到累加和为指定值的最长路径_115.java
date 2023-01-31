@@ -22,6 +22,7 @@ public class CD165_在二叉树中找到累加和为指定值的最长路径_115
 		System.out.println(res);
 	}
 
+	//利用递归 先序遍历
 	static void traversal(Node node, int sum, int preSum, int level) {
 		if (node == null) return;
 

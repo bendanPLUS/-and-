@@ -57,6 +57,8 @@ public class CD168_二叉树的按层打印与ZigZag打印_129 {
 		return node;
 	}
 
+
+	//层遍历
 	// 从头开始，取出当前节点并打印，左右有孩子分别加入，直到列表为空
 	private static void bfs(TreeNode root) {
 		if (root == null) return;
@@ -94,24 +96,16 @@ public class CD168_二叉树的按层打印与ZigZag打印_129 {
 				while (!l1.isEmpty()) {
 					TreeNode cur = l1.pop();
 					sb.append(" ").append(cur.val);
-					if (cur.left != null) {
-						l2.push(cur.left);
-					}
-					if (cur.right != null) {
-						l2.push(cur.right);
-					}
+					if (cur.left != null) l2.push(cur.left);
+					if (cur.right != null) l2.push(cur.right);
 				}
 			} else {
 				sb.append(" from right to left:");
 				while (!l2.isEmpty()) {
 					TreeNode cur = l2.pop();
 					sb.append(" ").append(cur.val);
-					if (cur.right != null) {
-						l1.push(cur.right);
-					}
-					if (cur.left != null) {
-						l1.push(cur.left);
-					}
+					if (cur.right != null) l1.push(cur.right);
+					if (cur.left != null) l1.push(cur.left);
 				}
 			}
 			level++;
