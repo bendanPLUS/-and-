@@ -27,14 +27,10 @@ public class CD165_在二叉树中找到累加和为指定值的最长路径_115
 
 		// 1. 求前缀和，并加入sumMap，不存在时才加 只添加最早出现的 的 curSum --> level
 		int curSum = preSum + node.val;
-		if (!sumMap.containsKey(curSum)) {
-			sumMap.put(curSum, level);
-		}
+		if (!sumMap.containsKey(curSum)) sumMap.put(curSum, level);
 
 		// 2. 判断是否存在前缀满足curSum - sum, 保存最大level差
-		if (sumMap.containsKey(curSum - sum)) {
-			res = Math.max(res, level - sumMap.get(curSum - sum));
-		}
+		if (sumMap.containsKey(curSum - sum)) res = Math.max(res, level - sumMap.get(curSum - sum));
 
 		// 3. 递归搜索所有节点
 		traversal(node.left, sum, curSum, level + 1);

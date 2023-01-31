@@ -72,26 +72,21 @@ public class CD162_打印二叉树的边界节点_95 {
 		//3 先序遍历 递归 寻找叶子节点 并且不是边界节点 最左节点or最右节点
 		leafInNode(root, 0, edgeNode, sb);
 		for (int i = edgeNode.length - 1; i >= 0; --i) {
-			if (edgeNode[i][0] != edgeNode[i][1]) {
-				sb.append(edgeNode[i][1].val + " ");
-			}
+			if (edgeNode[i][0] != edgeNode[i][1]) sb.append(edgeNode[i][1].val + " ");
 		}
 		System.out.print(sb);
 	}
 
 	//获取二叉树的高度 递归
 	public static int getHeight(TreeNode root, int h) {
-		if (root == null)
-			return h;
+		if (root == null) return h;
 		return Math.max(getHeight(root.left, h + 1), getHeight(root.right, h + 1));
 	}
 
 	//用一个二维数组 记录每一层的最左节点 和 最右节点
 	//递归方式的先序遍历
 	public static void setEdgeNode(TreeNode root, int h, TreeNode[][] edgeNode) {
-		if (root == null) {
-			return;
-		}
+		if (root == null) return;
 		//递归方式的先序遍历
 		//记录最左节点 每层最左节点 如果为null才进行赋值 每一层遍历的第一个节点就是
 		edgeNode[h][0] = edgeNode[h][0] == null ? root : edgeNode[h][0];
@@ -103,14 +98,11 @@ public class CD162_打印二叉树的边界节点_95 {
 
 	//先序遍历 递归 寻找叶子节点 并且不是边界节点 最左节点or最右节点
 	public static void leafInNode(TreeNode root, int h, TreeNode[][] edgeNode, StringBuilder sb) {
-		if (root == null) {
-			return;
-		}
+		if (root == null) return;
 		//TODO 先序遍历 递归
 		//寻找叶子节点 并且不是边界节点 最左节点or最右节点
-		if (root.left == null && root.right == null && root != edgeNode[h][0] && root != edgeNode[h][1]) {
+		if (root.left == null && root.right == null && root != edgeNode[h][0] && root != edgeNode[h][1])
 			sb.append(root.val + " ");
-		}
 		leafInNode(root.left, h + 1, edgeNode, sb);
 		leafInNode(root.right, h + 1, edgeNode, sb);
 	}
