@@ -6,6 +6,8 @@ import java.io.StreamTokenizer;
 
 public class CD176_在二叉树中找到两个节点的最近公共祖先_153 {
 
+
+	//递归后续遍历的改编
 	static Node findCommonRoot(Node node, int t1, int t2) {
 		if (node == null || node.val == t1 || node.val == t2)
 			return node;
