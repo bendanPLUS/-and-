@@ -53,25 +53,23 @@ public class CD170_判断t1树是否包含t2树全部的拓扑结构_141 {
 	}
 
 
-	public boolean HasSubtree(TreeNode root1,TreeNode root2) {
-		boolean result=false;
-		if(root1!=null&&root2!=null){
-			if(root1.val==root2.val)
-				result =DoseTree1HasTree2(root1,root2);
-			if(!result)  //写成了 root1.val!=root2.val; 导致出错了；
-				result = HasSubtree(root1.left,root2);
-			if(!result)
-				result = HasSubtree(root1.right, root2);
-		}
-		return result;
+	public boolean HasSubtree(TreeNode root1, TreeNode root2) {
+//		boolean result = false;
+//		if (root1 != null && root2 != null) {
+//			if (root1.val == root2.val) result = checkTree1HasTree2(root1, root2);
+//			if (!result)  //写成了 root1.val!=root2.val; 导致出错了；
+//				result = HasSubtree(root1.left, root2);
+//			if (!result) result = HasSubtree(root1.right, root2);
+//		}
+//		return result;
+		return checkTree1HasTree2(root1, root2) || HasSubtree(root1.left, root2) || HasSubtree(root1.right, root2);
 	}
-	public static boolean DoseTree1HasTree2(TreeNode root1,TreeNode root2) {
-		if(root2==null)  return true;
-		if(root1==null)  return false;
-		if(root1.val!=root2.val)
-			return false;
-		return DoseTree1HasTree2(root1.left, root2.left)
-				&&DoseTree1HasTree2(root1.right, root2.right);
+
+	public static boolean checkTree1HasTree2(TreeNode root1, TreeNode root2) {
+		if (root2 == null) return true;
+		if (root1 == null) return false;
+		if (root1.val != root2.val) return false;
+		return checkTree1HasTree2(root1.left, root2.left) && checkTree1HasTree2(root1.right, root2.right);
 	}
 
 

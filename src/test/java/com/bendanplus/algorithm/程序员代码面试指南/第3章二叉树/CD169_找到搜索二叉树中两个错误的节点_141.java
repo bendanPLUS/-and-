@@ -63,6 +63,7 @@ public class CD169_找到搜索二叉树中两个错误的节点_141 {
 	 * 第二个错误节点：最后一次降序时较小的节点
 	 * 所以只需要改写一个基本的中序遍历
 	 */
+	//利用中序遍历
 	public static int[] getTwoErrNodes(TreeNode root) {
 		if (root == null) {
 			return null;
