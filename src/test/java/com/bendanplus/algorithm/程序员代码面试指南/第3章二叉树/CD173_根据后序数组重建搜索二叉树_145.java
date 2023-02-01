@@ -34,21 +34,21 @@ public class CD173_根据后序数组重建搜索二叉树_145 {
 	 */
 	static boolean isBSTHelper(int[] arr, int start, int end) {
 		if (start == end) return true;
-		int more = -1;
-		int mid = end;
-		//找到 less --> 左子树的最后一个节点 和 more --> 右子树的第一个节点
+		int leftSTreeEnd = -1;
+		int rightSTreeStart = end;
+		//找到 leftSTreeEnd --> 左子树的最后一个节点 和 rightSTreeStart --> 右子树的第一个节点
 		for (int i = start; i < end; i++) {
-			if (arr[end] > arr[i])
-				more = i;
-			 else
-				 //只初始化一次 记第一次
-				mid = mid == end ? i : mid;
+			if (arr[end] > arr[i]) leftSTreeEnd = i;
+			else
+				//只初始化一次 记第一次 因为要找的是右子树的第一个节点
+				rightSTreeStart = rightSTreeStart == end ? i : rightSTreeStart;
 		}
 		//判断  根节点只有左子树 or 根节点只有右子树情况的处理方式
-		if (mid == end || more == -1)
-			return isBSTHelper(arr, start, end - 1);
-		if (mid != more + 1)  // mid = less+1
+		if (rightSTreeStart == end || leftSTreeEnd == -1) return isBSTHelper(arr, start, end - 1);
+		if (rightSTreeStart != leftSTreeEnd + 1)  // mid = less+1
 			return false;
-		return isBSTHelper(arr, start, more) && isBSTHelper(arr, mid, end - 1);
+		int leftSTreeStart = start;
+		int rightSTreeEnd = end - 1;
+		return isBSTHelper(arr, leftSTreeStart, leftSTreeEnd) && isBSTHelper(arr, rightSTreeStart, rightSTreeEnd);
 	}
 }
