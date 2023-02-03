@@ -11,11 +11,9 @@ public class CD176_在二叉树中找到两个节点的最近公共祖先_153 {
 	static Node findCommonRoot(Node node, int t1, int t2) {
 		if (node == null || node.val == t1 || node.val == t2)
 			return node;
-
 		//二叉树的后序遍历 左右根 遍历公共祖先之前一定会先遍历出 t1 t2
 		Node left = findCommonRoot(node.left, t1, t2);
 		Node right = findCommonRoot(node.right, t1, t2);
-
 		return left == null ? right : (right != null ? node : left);
 	}
 
