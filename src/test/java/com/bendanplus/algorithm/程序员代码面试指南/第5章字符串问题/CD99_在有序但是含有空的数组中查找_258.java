@@ -46,25 +46,22 @@ public class CD99_在有序但是含有空的数组中查找_258 {
 			mid = (left + right) / 2;
 			if (strs[mid] != null && strs[mid].equals(str)) {
 				res = mid;
-				//要左半部分
+				//要左半部分 在左半区找最左出现的str
 				right = mid - 1;
 			} else if (strs[mid] != null) {
-				if (strs[mid].compareTo(str) < 0) {
+				if (strs[mid].compareTo(str) < 0) //因为是字典序，mid<str 小于一定出现在右半区
 					//要右半部分
 					left = mid + 1;
-				} else {
+				else //因为是字典序，mid<str 大于一定出现在左半区
 					//要左半部分
 					right = mid - 1;
-				}
-				//strs[mid] == null
-			} else {
+			} else { //strs[mid] == null情况
 				i = mid;
-				//从右到左遍历左半区 发现第一个不为null的位置 i
+				//从右到左遍历左半区 发现第一个不为null的位置 i 找到右半区 最右边不为null的值
 				while (strs[i] == null && --i >= left) ;
 
-				if (i < left || strs[i].compareTo(str) < 0) {
-					left = mid + 1;
-				} else {
+				if (i < left || strs[i].compareTo(str) < 0) left = mid + 1; //i<str说明在右半区
+				else {
 					res = strs[i].equals(str) ? i : res;
 					right = i - 1;
 				}
