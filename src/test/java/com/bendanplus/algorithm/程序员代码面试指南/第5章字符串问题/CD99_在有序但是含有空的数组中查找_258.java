@@ -32,7 +32,6 @@ public class CD99_在有序但是含有空的数组中查找_258 {
 		System.out.println(getIndex(strs, str));
 	}
 
-
 	//二分法
 	public static int getIndex(String[] strs, String str) {
 		if (strs == null || strs.length <= 0 || str == null) return -1;
@@ -69,6 +68,4 @@ public class CD99_在有序但是含有空的数组中查找_258 {
 		}
 		return res;
 	}
-
-
 }
