@@ -21,7 +21,7 @@ public class SingletonExample7 {
 
 	//静态内部类画
 	//首次调用getInstance1 才进行SingletonExampleHolder初始化
-	public SingletonExample7 getInstance1() {
+	public static SingletonExample7 getInstance1() {
 		return SingletonExampleHolder.instance;
 	}
 
