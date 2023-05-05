@@ -7,12 +7,10 @@ package com.bendanplus.algorithm.剑指offer;
  */
 public class 面试题05替换空格 {
 	public String replaceSpace(StringBuffer str) {
-		if (str == null || str.length() == 0)
-			return str.toString();
+		if (str == null || str.length() == 0) return str.toString();
 		int oldTail = str.length() - 1;
 		for (int i = 0; i <= oldTail; i++)
-			if (str.charAt(i) == ' ')
-				str.append("  ");
+			if (str.charAt(i) == ' ') str.append("  ");
 
 		int newTail = str.length() - 1;
 		//从后向前遍历
@@ -22,8 +20,7 @@ public class 面试题05替换空格 {
 				str.setCharAt(newTail--, '0');
 				str.setCharAt(newTail--, '2');
 				str.setCharAt(newTail--, '%');
-			} else
-				str.setCharAt(newTail--, str.charAt(c));
+			} else str.setCharAt(newTail--, c);
 		}
 		//这是是出给C++人做的[奸笑] java用repaceAll
 		return str.toString().replaceAll(" ", "02%");
