@@ -1,6 +1,6 @@
 package com.bendanplus.algorithm.剑指offer;
 
-public class 面15二进制中1的个数 {
+public class 面试题15二进制中1的个数 {
 	public int NumberOf1(int n) {
 		int cnt = 0;
 		while (n != 0) {

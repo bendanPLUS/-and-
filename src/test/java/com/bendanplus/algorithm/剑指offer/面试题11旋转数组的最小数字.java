@@ -1,13 +1,10 @@
 package com.bendanplus.algorithm.剑指offer;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 @Slf4j
-public class 面11旋转数组的最小数字 {
+public class 面试题11旋转数组的最小数字 {
 
 	@Test
 	public void test面试题11() {

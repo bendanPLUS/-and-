@@ -1,6 +1,6 @@
 package com.bendanplus.algorithm.剑指offer;
 
-public class 面07前序遍历和中序遍历结果重建二叉树 {
+public class 面试题07前序遍历和中序遍历结果重建二叉树 {
 
 	/**
 	 * 这个地方可以把中序遍历的结果放到map里 key=实际值 value=in数值对应的位置 这样就不用每一次递归都for循环了 直接在map里面拿

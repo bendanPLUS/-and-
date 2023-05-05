@@ -1,13 +1,11 @@
 package com.bendanplus.algorithm.剑指offer;
 
-import java.util.HashMap;
-
 /**
  * Stringbuffer代表一个字符序列可变的字符串,当一个Stringbuffer被创建以后,通过Stringbuffer提供的
  * append() reverse() setCharAt() setLength()方法改变这个字符串序列
  * Stringbuffer是线程安全所有方法都是synchronized修饰的
  */
-public class 面05替换空格 {
+public class 面试题05替换空格 {
 	public String replaceSpace(StringBuffer str) {
 		if (str == null || str.length() == 0)
 			return str.toString();
