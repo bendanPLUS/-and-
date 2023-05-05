@@ -14,6 +14,7 @@ public class 面试题03_JZ50数组中重复的数字 {
 			return false;
 		//判断一下所有数是否小于长度
 		for (int i = 0; i < nums.length; i++) {
+			//所有数都在 0～n-1范围内
 			if (nums[i] < 0 || nums[i] > length - 1)
 				return false;
 			while (nums[i] != i) {
