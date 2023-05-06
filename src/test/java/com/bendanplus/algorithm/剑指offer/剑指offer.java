@@ -2,6 +2,7 @@ package com.bendanplus.algorithm.剑指offer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.junit.platform.commons.util.StringUtils;
 
 import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
@@ -14,6 +15,40 @@ public class 剑指offer {
 		log.info("----log-----");
 	}
 
+
+	//面试题12_JZ65矩阵中的路径
+	public boolean 面试题12hasPath(char[][] matrix, String word) {
+		if (matrix == null || matrix.length == 0 || StringUtils.isBlank(word)) return false;
+
+		//创建一个标记矩阵
+		boolean[][] mark = new boolean[matrix.length][matrix[0].length];
+		boolean res = false;
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[0].length; j++) {
+				res = 面试题12judge(matrix, mark, word, i, j, 0);
+				if (res) return res;
+			}
+		}
+		return false;
+	}
+
+	public boolean 面试题12judge(char[][] matrix, boolean[][] visited, String word, int i, int j, int k) {
+		if (k == word.length()) return true;
+		boolean res = false;
+		if (i >= 0 && i < matrix.length
+				&& j >= 0 && j < matrix[0].length
+				&& visited[i][j] == false
+				&& matrix[i][j] == word.charAt(k)) {
+			visited[i][j] = true;
+			res = 面试题12judge(matrix, visited, word, i + 1, j, k + 1)
+					|| 面试题12judge(matrix, visited, word, i, j + 1, k + 1)
+					|| 面试题12judge(matrix, visited, word, i - 1, j, k + 1)
+					|| 面试题12judge(matrix, visited, word, i, j - 1, k + 1);
+			visited[i][j] = false;
+		}
+		return res;
+	}
+
 	//面试题16 数值的整数次方
 	@Test
 	private double Power(double base, int exponent) {
@@ -21,11 +56,9 @@ public class 剑指offer {
 			return 0.0;
 		}
 		int absExponent = exponent;
-		if (exponent < 0)
-			absExponent = -exponent;
+		if (exponent < 0) absExponent = -exponent;
 		double res = getPower(base, absExponent);
-		if (exponent < 0)
-			res = 1 / res;
+		if (exponent < 0) res = 1 / res;
 		return res;
 	}
 
@@ -38,14 +71,12 @@ public class 剑指offer {
 		}
 		double res = getPower(base, exponent >> 1);
 		res *= res;
-		if ((exponent & 1) == 1)
-			res *= base;
+		if ((exponent & 1) == 1) res *= base;
 		return res;
 	}
 
 	private boolean powerEqual(double base1, double base2) {
-		if (base1 - base2 <= 0.0000000000001 && base2 - base1 <= 0.000000000000001)
-			return true;
+		if (base1 - base2 <= 0.0000000000001 && base2 - base1 <= 0.000000000000001) return true;
 		return false;
 	}
 
@@ -288,15 +319,12 @@ public class 剑指offer {
 
 	//面试题27  输入一颗二叉树 该函数输出它的镜像
 	private void Mirror(TreeNode root) {
-		if (root == null || (root.left == null && root.right == null))
-			return;
+		if (root == null || (root.left == null && root.right == null)) return;
 		TreeNode tmp = root.left;
 		root.left = root.right;
 		root.right = tmp;
-		if (root.left != null)
-			Mirror(root.left);
-		if (root.right != null)
-			Mirror(root.right);
+		if (root.left != null) Mirror(root.left);
+		if (root.right != null) Mirror(root.right);
 	}
 
 	//面试题28 判断一颗二叉树是不是对称的 如果一颗二叉树和他的镜像一样 那么他就是对称的二叉树
@@ -323,8 +351,7 @@ public class 剑指offer {
 
 	public ArrayList<Integer> printMatrix(int[][] matrix) {
 		//边界条件的判断
-		if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
-			return null;
+		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return null;
 
 		//行数
 		int rows = matrix.length;
@@ -406,8 +433,7 @@ public class 剑指offer {
 
 	//面试题32 题目一不分行从上到下打印二叉树
 	private ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
-		if (root == null)
-			return new ArrayList<>();
+		if (root == null) return new ArrayList<>();
 		//存储的打印数据
 		ArrayList<Integer> list = new ArrayList<>();
 		Queue<TreeNode> queue = new LinkedList<>();
@@ -416,18 +442,15 @@ public class 剑指offer {
 			//Retrieves and removes the head of this queue,
 			final TreeNode poll = queue.poll();
 			list.add(poll.val);
-			if (poll.left != null)
-				queue.offer(poll.left);
-			if (poll.right != null)
-				queue.offer(poll.right);
+			if (poll.left != null) queue.offer(poll.left);
+			if (poll.right != null) queue.offer(poll.right);
 		}
 		return list;
 	}
 
 	//面试题32 题目2 分行从上到下打印二叉树
 	private ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
-		if (pRoot == null)
-			return new ArrayList<ArrayList<Integer>>();
+		if (pRoot == null) return new ArrayList<ArrayList<Integer>>();
 
 		ArrayList<ArrayList<Integer>> list = new ArrayList<>();
 		ArrayList<Integer> tmp = new ArrayList<>();
@@ -546,8 +569,7 @@ public class 剑指offer {
 		return arrayList;
 	}
 
-	private void FindPath1(TreeNode root, int target, int curSum, ArrayList<ArrayList<Integer>> arrayList
-			, ArrayList<Integer> arrayList1) {
+	private void FindPath1(TreeNode root, int target, int curSum, ArrayList<ArrayList<Integer>> arrayList, ArrayList<Integer> arrayList1) {
 		if (root != null) {
 			curSum += root.val;
 			arrayList1.add(root.val);
