@@ -102,6 +102,20 @@ public class 剑指offer {
 		return false;
 	}
 
+	//面试题17 打印从1到最大的n位数
+	@Test
+	public int[] printNumbers (int n) {
+		// write code here
+		int len = (int)Math.pow(10, n);
+		int index = 1;
+		int[] res = new int[len - 1];
+		for (int i = 0; i < res.length; i++) {
+			res[i] = index++;
+		}
+		return res;
+	}
+
+
 	//面试题18  删除 排序 链表中重复的节点
 	//1 递归的解法 通过测试
 	private ListNode deleteDuplication(ListNode pHead) {
