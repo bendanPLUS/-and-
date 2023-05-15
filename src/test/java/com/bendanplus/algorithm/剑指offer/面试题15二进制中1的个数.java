@@ -2,12 +2,12 @@ package com.bendanplus.algorithm.剑指offer;
 
 public class 面试题15二进制中1的个数 {
 	public int NumberOf1(int n) {
-		int cnt = 0;
+		int count = 0;
 		while (n != 0) {
-			cnt++;
-			n &= (n - 1);
+			count++;
+			n &= (n - 1);//n = n & (n - 1);
 		}
-		return cnt;
+		return count;
 	}
 	//Integer.bitCount(n) Integer源码
 	public int NumberOf2(int n) {

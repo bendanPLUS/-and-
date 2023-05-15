@@ -35,18 +35,43 @@ public class 剑指offer {
 	public boolean 面试题12judge(char[][] matrix, boolean[][] visited, String word, int i, int j, int k) {
 		if (k == word.length()) return true;
 		boolean res = false;
-		if (i >= 0 && i < matrix.length
-				&& j >= 0 && j < matrix[0].length
-				&& visited[i][j] == false
-				&& matrix[i][j] == word.charAt(k)) {
+		if (i >= 0 && i < matrix.length && j >= 0 && j < matrix[0].length && visited[i][j] == false && matrix[i][j] == word.charAt(k)) {
 			visited[i][j] = true;
-			res = 面试题12judge(matrix, visited, word, i + 1, j, k + 1)
-					|| 面试题12judge(matrix, visited, word, i, j + 1, k + 1)
-					|| 面试题12judge(matrix, visited, word, i - 1, j, k + 1)
-					|| 面试题12judge(matrix, visited, word, i, j - 1, k + 1);
+			res = 面试题12judge(matrix, visited, word, i + 1, j, k + 1) || 面试题12judge(matrix, visited, word, i, j + 1, k + 1) || 面试题12judge(matrix, visited, word, i - 1, j, k + 1) || 面试题12judge(matrix, visited, word, i, j - 1, k + 1);
 			visited[i][j] = false;
 		}
 		return res;
+	}
+
+	public int 面试题14_JZ67剪绳子cutRope(int n) {
+		if (n < 2) return 0;
+		if (n == 2) return 1;
+		if (n == 3) return 2;
+		int[] dp = new int[n + 1];
+		dp[0] = 1;
+		dp[1] = 1;
+		dp[2] = 2;
+		dp[3] = 3;
+		int max = 0;
+		for (int i = 4; i < dp.length; i++) {
+			max = 0;
+			for (int j = 1; j <= i / 2; j++) {
+				int tmp = dp[j] * dp[i - j];
+				max = Math.max(max, tmp);
+			}
+			dp[i] = max;
+		}
+		return dp[n];
+	}
+
+
+	public int 面试题15二进制中1的个数NumberOf1(int n) {
+		int count = 0;
+		while (n != 0) {
+			count++;
+			n &= (n - 1);
+		}
+		return count;
 	}
 
 	//面试题16 数值的整数次方
@@ -63,12 +88,9 @@ public class 剑指offer {
 	}
 
 	private double getPower(double base, int exponent) {
-		if (exponent == 0) {
-			return 1;
-		}
-		if (exponent == 1) {
-			return base;
-		}
+		if (exponent == 0) return 1;
+		if (exponent == 1) return base;
+
 		double res = getPower(base, exponent >> 1);
 		res *= res;
 		if ((exponent & 1) == 1) res *= base;

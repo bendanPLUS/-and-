@@ -3,12 +3,9 @@ package com.bendanplus.algorithm.剑指offer;
 public class 面试题14_JZ67剪绳子 {
 
 	public int cutRope(int n) {
-		if (n < 2)
-			return 0;
-		if (n == 2)
-			return 1;
-		if (n == 3)
-			return 2;
+		if (n < 2) return 0;
+		if (n == 2) return 1;
+		if (n == 3) return 2;
 
 		int[] dp = new int[n + 1];
 		dp[0] = 0;
@@ -20,8 +17,7 @@ public class 面试题14_JZ67剪绳子 {
 			max = 0;
 			for (int j = 1; j <= i / 2; j++) {
 				int tmp = dp[j] * dp[i - j];
-				if (max < tmp)
-					max = tmp;
+				max = Math.max(max, tmp);
 			}
 			dp[i] = max;
 		}
