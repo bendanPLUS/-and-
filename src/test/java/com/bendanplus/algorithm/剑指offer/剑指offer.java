@@ -104,9 +104,9 @@ public class 剑指offer {
 
 	//面试题17 打印从1到最大的n位数
 	@Test
-	public int[] printNumbers (int n) {
+	public int[] printNumbers(int n) {
 		// write code here
-		int len = (int)Math.pow(10, n);
+		int len = (int) Math.pow(10, n);
 		int index = 1;
 		int[] res = new int[len - 1];
 		for (int i = 0; i < res.length; i++) {
@@ -159,7 +159,6 @@ public class 剑指offer {
 	}
 
 	//面试题21  调整数组顺序使奇数位于偶数前面 并保证偶数与奇数之间相对位置不变
-
 	@Test
 	public void test面试题21() {
 		int[] array = {1, 2, 3, 4, 5, 6, 7};
@@ -167,22 +166,16 @@ public class 剑指offer {
 	}
 
 	private void reOrderArray(int[] array) {
-		if (array == null || array.length == 0) {
-			return;
-		}
+		if (array == null || array.length == 0) return;
 		//保证顺序的交换ab的位置
 		int a = 0;
 		int b = a + 1;
 		while (a < array.length) {
 			//寻找的偶数位
-			while (a < array.length && (array[a] & 1) == 1) {
-				a++;
-			}
+			while (a < array.length && (array[a] & 1) == 1) a++;
 			//寻找的奇数
 			b = a + 1;
-			while (b < array.length && (array[b] & 1) != 1) {
-				b++;
-			}
+			while (b < array.length && (array[b] & 1) != 1) b++;
 			//交换ab的位置
 			if (b < array.length) {
 				int tmp = array[b];
@@ -223,6 +216,22 @@ public class 剑指offer {
 	}
 
 	//面试题23 链表中环的入口
+	private ListNode EntryNodeOfLoop1(ListNode pHead) {
+		if (pHead == null || pHead.next == null) return null;
+		ListNode fast = pHead;
+		ListNode slow = pHead;
+		do {
+			fast = fast.next.next;
+			slow = slow.next;
+		} while (fast != slow);
+		fast = pHead;
+		while (fast != slow) {
+			fast = fast.next;
+			slow = slow.next;
+		}
+		return fast;
+	}
+
 	private ListNode EntryNodeOfLoop(ListNode pHead) {
 		int count = 1;
 		final ListNode meetingNode = MeetingNode(pHead);
