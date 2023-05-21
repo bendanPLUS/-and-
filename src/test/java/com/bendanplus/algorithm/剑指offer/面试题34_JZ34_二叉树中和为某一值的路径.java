@@ -8,7 +8,7 @@ import java.util.ArrayList;
 //2.叶子节点是指没有子节点的节点
 //3.路径只能从父节点到子节点，不能从子节点到父节点
 //4.总节点数目为n
-public class 面试题33_JZ34_二叉树中和为某一值的路径 {
+public class 面试题34_JZ34_二叉树中和为某一值的路径 {
 
 	private ArrayList<ArrayList<Integer>> result = new ArrayList<>();
 

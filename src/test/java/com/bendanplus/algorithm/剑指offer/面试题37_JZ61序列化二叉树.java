@@ -6,6 +6,7 @@ package com.bendanplus.algorithm.剑指offer;
  */
 public class 面试题37_JZ61序列化二叉树 {
 	int index = -1;
+	private String deserializeStr;
 
 	String Serialize(TreeNode root) {
 		StringBuffer res = new StringBuffer();
@@ -27,9 +28,7 @@ public class 面试题37_JZ61序列化二叉树 {
 			node = new TreeNode(Integer.valueOf(s[index]));
 			node.left = Deserialize(str);
 			node.right = Deserialize(str);
-		} else {
-			node = null;
-		}
+		} else node = null;
 		return node;
 	}
 }
