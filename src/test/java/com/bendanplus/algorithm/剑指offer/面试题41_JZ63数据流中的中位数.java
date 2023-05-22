@@ -1,6 +1,5 @@
 package com.bendanplus.algorithm.剑指offer;
 
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -19,7 +18,7 @@ public class 面试题41_JZ63数据流中的中位数 {
 		for (int i = 0; i < nums.length; i++) {
 			Insert(nums[i]);
 			final Double aDouble = GetMedian();
-			System.out.println("aDouble==="+aDouble);
+			System.out.println("aDouble===" + aDouble);
 		}
 	}
 
@@ -32,7 +31,7 @@ public class 面试题41_JZ63数据流中的中位数 {
 //			});
 
 	//最大堆
-	private static PriorityQueue<Integer> maxHeap =new PriorityQueue<>(15,(o1,o2) -> o2.compareTo(o1));
+	private static PriorityQueue<Integer> maxHeap = new PriorityQueue<>(15, (o1, o2) -> o2.compareTo(o1));
 
 
 	public static void Insert(Integer num) {
@@ -50,11 +49,7 @@ public class 面试题41_JZ63数据流中的中位数 {
 
 	public static Double GetMedian() {
 		//偶数 取平均数
-		if ((count & 1) == 0) {
-			double res = (double) (maxHeap.peek() + minHeap.peek());
-			return res / 2.0;
-		} else {
-			return new Double(minHeap.peek());
-		}
+		if ((count & 1) == 0) return (maxHeap.peek() + minHeap.peek()) / 2.0;
+		else return new Double(minHeap.peek());
 	}
 }
