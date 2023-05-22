@@ -20,8 +20,7 @@ public class 面试题51_JZ35数组中的逆序对 {
 	private long count = 0;
 
 	public int InversePairs(int[] array) {
-		if (array == null || array.length == 0)
-			return 0;
+		if (array == null || array.length == 0) return 0;
 		copy = new int[array.length];
 		for (int i = 0; i < array.length; i++)
 			copy[i] = array[i];
@@ -34,40 +33,39 @@ public class 面试题51_JZ35数组中的逆序对 {
 	}
 
 	private void mergeSort(int[] array, int left, int right, int[] copy) {
-		if (left < right) {
-			int mid = (left + right) >> 1;
-			//把mid左边数组的排好序
-			mergeSort(array, left, mid, copy);
-			//把mid右边数组的排好序
-			mergeSort(array, mid + 1, right, copy);
-			//现在左边右边数组都已经排好序 把整个数组排好序
-			sort(array, left, mid, right, copy);
-		}
+		if ((right - left) < 1) return;
+
+		int mid = (left + right) >> 1;
+		//递归
+		// 把mid左边数组的排好序
+		mergeSort(array, left, mid, copy);
+		//把mid右边数组的排好序
+		mergeSort(array, mid + 1, right, copy);
+		//排序
+		//现在左边右边数组都已经排好序 把整个数组排好序
+		sort(array, left, mid, right, copy);
 	}
 
 	private void sort(int[] array, int left, int mid, int right, int[] copy) {
 		int i = left, j = mid + 1, k = left;
 		while (i <= mid && j <= right) {
-			if (array[i] <= array[j])
-				copy[k++] = array[i++];
+			if (i > mid) copy[k] = array[j++];
+			else if (j > right) copy[k] = array[i++];
+			else if (array[i] <= array[j]) copy[k] = array[i++]; //两个数相比 那个数更小就放在前边
 			else {
-				copy[k++] = array[j++];
+				copy[k] = array[j++];//出现了前面的数大于后面的数 说明是逆序
 				//这个地方可能会出现重复计算
-				this.count += mid - i + 1;
+				this.count += mid - i + 1; //左边的数全部大于后边的数array[j]
 			}
+			k++;
 		}
-		while (i <= mid)
-			copy[k++] = array[i++];
-		while (j <= right)
-			copy[k++] = array[j++];
 		for (int l = left; l <= right; l++)
 			array[l] = copy[l];
 	}
 
 	@Test
 	public void test() {
-		int[] array = {1, 1, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 9, 1, 1, 1, 1, 1, 1,
-				100000, 0, 7, 0};
+		int[] array = {1, 1, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 9, 1, 1, 1, 1, 1, 1, 100000, 0, 7, 0};
 		final int i = InversePairs(array);
 		log.info("归并排序后的数组array{}", array);
 		log.info("结果等于{}", i);

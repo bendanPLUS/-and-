@@ -9,18 +9,15 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class 面试题50_JZ54字符流中第一个不重复的字符 {
 	public int FirstNotRepeatingChar(String str) {
-		if (str == null || str.length() == 0) {
-			return 0;
-		}
+		if (str == null || str.length() == 0) return 0;
 		int[] cnts = new int[256];
-		for (int i = 0; i < str.length(); i++) {
+		for (int i = 0; i < str.length(); i++)
 			cnts[str.charAt(i)]++;
-		}
-		for (int j = 0; j < cnts.length; j++) {
-			if (cnts[str.charAt(j)] == 1) {
-				return j;
-			}
-		}
+
+		for (int j = 0; j < str.length(); j++)
+			if (cnts[str.charAt(j)] == 1) return j;
 		return -1;
+
+
 	}
 }

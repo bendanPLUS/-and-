@@ -16,29 +16,21 @@ import java.util.ArrayList;
 @Slf4j
 public class 面试题49 {
 	public int GetUglyNumber_Solution(int index) {
-		if (index <= 6) {
-			return index;
-		}
+		if (index <= 6) return index;
 		ArrayList<Integer> arrayList = new ArrayList<>();
 		arrayList.add(1);
 		int i2 = 0;
 		int i3 = 0;
 		int i5 = 0;
 		while (arrayList.size() < index) {
-			final int m2 = arrayList.get(i2) * 2;
-			final int m3 = arrayList.get(i3) * 3;
-			final int m5 = arrayList.get(i5) * 5;
+			int m2 = arrayList.get(i2) * 2;
+			int m3 = arrayList.get(i3) * 3;
+			int m5 = arrayList.get(i5) * 5;
 			int min = Math.min(m2, Math.min(m3, m5));
 			arrayList.add(min);
-			if (m2 == min) {
-				i2++;
-			}
-			if (m3 == min) {
-				i3++;
-			}
-			if (m5 == min) {
-				i5++;
-			}
+			if (m2 == min) i2++;
+			if (m3 == min) i3++;
+			if (m5 == min) i5++;
 		}
 		return arrayList.get(arrayList.size() - 1);
 	}
@@ -52,12 +44,9 @@ public class 面试题49 {
 
 	// 判断是否是丑数
 	public boolean isUgly(int number) {
-		while (number % 2 == 0)
-			number = number / 2;
-		while (number % 3 == 0)
-			number = number / 3;
-		while (number % 5 == 0)
-			number = number / 5;
+		while (number % 2 == 0) number = number / 2;
+		while (number % 3 == 0) number = number / 3;
+		while (number % 5 == 0) number = number / 5;
 		return number == 1 ? true : false;
 
 	}

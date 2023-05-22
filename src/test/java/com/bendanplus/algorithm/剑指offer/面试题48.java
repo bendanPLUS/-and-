@@ -1,6 +1,7 @@
 package com.bendanplus.algorithm.剑指offer;
 
 import lombok.extern.slf4j.Slf4j;
+
 import java.util.Scanner;
 
 /**
@@ -15,18 +16,16 @@ public class 面试题48 {
 
 		Scanner in = new Scanner(System.in);
 		int n = in.nextInt();
-		StringBuilder sb  = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < n; i++) {
 			sb.append(in.nextInt());
 		}
 		final int i = longestSubstringWithoutDuo(sb.toString());
-		log.info("结果等于 {}",i);
+		log.info("结果等于 {}", i);
 	}
 
 	private static int longestSubstringWithoutDuo(String str) {
-		if (str == null || str.length() == 0) {
-			return 0;
-		}
+		if (str == null || str.length() == 0) return 0;
 		//dp[i] 代表以i结尾 从0到i 最长不含重复字符的子字符串 的长度
 		int[] dp = new int[str.length()];
 		dp[0] = 1;
@@ -34,12 +33,10 @@ public class 面试题48 {
 		for (int dpIndex = 1; dpIndex < str.length(); dpIndex++) {
 			int i = dpIndex - 1;
 			//dpIndex - dp[dpIndex - 1] 代表 要循环dp[dpIndex - 1]的长度
-			for (; i >= dpIndex - dp[dpIndex - 1]; i--) {
+			for (; i >= dpIndex - dp[dpIndex - 1]; i--)
 				//如果相等说明 到达该点就是dp[i]的长度
-				if (str.charAt(dpIndex) == str.charAt(i)) {
-					break;
-				}
-			}
+				if (str.charAt(dpIndex) == str.charAt(i)) break;
+
 			//两种情况:1.没有与str.charAt(dpIndex)相同的字符 2.有与str.charAt(dpIndex)相同的字符
 			//从dpIndex开始往前遍历最长不含重复字符的子字符串 的长度
 			dp[dpIndex] = dpIndex - i;

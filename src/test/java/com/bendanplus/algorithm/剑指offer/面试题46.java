@@ -20,19 +20,17 @@ public class 面试题46 {
 
 	//动态规划
 	public int getTranslationCount(String str) {
-		if (StringUtils.isBlank(str)) {
-			return 0;
-		}
+		if (StringUtils.isBlank(str)) return 0;
 		int[] dp = new int[str.length() + 1];
 		dp[str.length()] = 1;
 		dp[str.length() - 1] = 1;
 		int g = 1;
+		//从后向前
 		for (int i = str.length() - 2; i >= 0; i--) {
-			if (Integer.parseInt(str.charAt(i) + "" + str.charAt(i + 1)) <= 25
-					&& Integer.parseInt(str.charAt(i) + "" + str.charAt(i + 1)) >= 10)
+			int num = Integer.parseInt(str.charAt(i) + "" + str.charAt(i + 1));
+			if ( num<= 25 && num >= 10)
 				g = 1;
-			else
-				g = 0;
+			else g = 0;
 
 			dp[i] = dp[i + 1] + (g * dp[i + 2]);
 		}
