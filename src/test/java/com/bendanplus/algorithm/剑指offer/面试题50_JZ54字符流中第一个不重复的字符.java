@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class 面试题50_JZ54字符流中第一个不重复的字符 {
 	public int FirstNotRepeatingChar(String str) {
+		//ASCII 码只有 128 个字符，因此可以使用长度为 128 的整型数组来存储每个字符出现的次数
 		if (str == null || str.length() == 0) return 0;
 		int[] cnts = new int[256];
 		for (int i = 0; i < str.length(); i++)
