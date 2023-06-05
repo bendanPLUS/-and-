@@ -35,7 +35,7 @@ public class 面试题51_JZ35数组中的逆序对_归并排序 {
 	private void mergeSort(int[] array, int left, int right, int[] copy) {
 		if (left < right) {
 			int mid = (left + right) >> 1;
-			//递归
+			//递归思想
 			// 把mid左边数组的排好序
 			mergeSort(array, left, mid, copy);
 			//把mid右边数组的排好序
@@ -47,13 +47,13 @@ public class 面试题51_JZ35数组中的逆序对_归并排序 {
 	}
 
 	private void sort(int[] array, int left, int mid, int right, int[] copy) {
-		int i = left, j = mid + 1, k = left;
+		int i = left, j = mid + 1, k = left;//i 左边数组起始位置 j右边数组其实位置 复制数组起始位置
 		while (i <= mid && j <= right) {
 			if (array[i] <= array[j]) copy[k++] = array[i++]; //两个数相比 那个数更小就放在前边
 			else {
 				copy[k++] = array[j++];//出现了前面的数大于后面的数 说明是逆序
 				//这个地方可能会出现重复计算
-				this.count += mid - i + 1; //左边的数全部大于后边的数array[j]
+				this.count += mid - i + 1; //逆序对个数 左边的数全部大于后边的数array[j]
 			}
 		}
 		while (i <= mid) copy[k++] = array[i++];
