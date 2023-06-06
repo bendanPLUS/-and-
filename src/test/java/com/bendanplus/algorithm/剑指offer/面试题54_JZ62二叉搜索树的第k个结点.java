@@ -9,7 +9,7 @@ package com.bendanplus.algorithm.剑指offer;
 public class 面试题54_JZ62二叉搜索树的第k个结点 {
 
 	int index = 0;
-	TreeNode node;
+	TreeNode node = new TreeNode(-1);
 
 	TreeNode KthNode(TreeNode pRoot, int k) {
 		if (pRoot == null || k < 0)

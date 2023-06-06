@@ -13,56 +13,52 @@ package com.bendanplus.algorithm.剑指offer;
  */
 public class 面试题58_JZ43JZ44左旋转字符串和翻转单词序列 {
 
-	public String ReverseSentence(String str) {
-		if (str == null || str.trim().length() == 0) {
-			return str;
-		}
-		final char[] chars = str.toCharArray();
-		reverse(chars, 0, chars.length - 1);
-		int left = -1;
-		for (int i = 0; i < chars.length; i++) {
-			if (chars[i] == ' ') {
-				reverse(chars, left + 1, i - 1);
-				left = i;
-			}
-		}
-		if (chars[chars.length - 1] != ' ') {
-			reverse(chars, left + 1, chars.length - 1);
-		}
-		return new String(chars);
-	}
+    public String ReverseSentence(String str) {
+        if (str == null || str.trim().length() == 0) return str;
+        final char[] chars = str.toCharArray();
+        reverse(chars, 0, chars.length - 1);
+        int left = -1;
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == ' ') {
+                reverse(chars, left + 1, i - 1);
+                left = i;
+            }
+        }
+        if (chars[chars.length - 1] != ' ')
+            reverse(chars, left + 1, chars.length - 1);
+        return new String(chars);
+    }
 
-	private void reverse(char[] chars, int left, int right) {
-		if (chars == null || chars.length == 0) {
-			return;
-		}
-		while (left < right) {
-			char temp = chars[left];
-			chars[left] = chars[right];
-			chars[right] = temp;
-			left++;
-			right--;
-		}
-	}
+    private void reverse(char[] chars, int left, int right) {
+        if (chars == null || chars.length == 0) return;
+        while (left < right)
+            swap(chars, left++, right--);
+    }
 
-	/**
-	 * 左旋转字符串
-	 * Input:
-	 * S="abcXYZdef"
-	 * K=3 把前三个元素旋转到后面
-	 * <p>
-	 * Output:
-	 * "XYZdefabc"
-	 * 传送门:https://www.nowcoder.com/practice/12d959b108cb42b1ab72cef4d36af5ec?tpId=13&tqId=11196&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking
-	 */
-	public String LeftRotateString(String str, int n) {
-		if (str == null || str.trim().length() == 0 || n > str.length()) {
-			return str;
-		}
-		final char[] chars = str.toCharArray();
-		reverse(chars, 0, n - 1);
-		reverse(chars, n, chars.length - 1);
-		reverse(chars, 0, chars.length - 1);
-		return new String(chars);
-	}
+    private void swap(char[] chars, int left, int right) {
+        char temp = chars[left];
+        chars[left] = chars[right];
+        chars[right] = temp;
+    }
+
+
+    /**
+     * 左旋转字符串
+     * Input:
+     * S="abcXYZdef"
+     * K=3 把前三个元素旋转到后面
+     * <p>
+     * Output:
+     * "XYZdefabc"
+     * 传送门:https://www.nowcoder.com/practice/12d959b108cb42b1ab72cef4d36af5ec?tpId=13&tqId=11196&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking
+     */
+    public String LeftRotateString(String str, int n) {
+        if (str == null || str.trim().length() == 0 || n > str.length())
+            return str;
+        final char[] chars = str.toCharArray();
+        reverse(chars, 0, n - 1);
+        reverse(chars, n, chars.length - 1);
+        reverse(chars, 0, chars.length - 1);
+        return new String(chars);
+    }
 }

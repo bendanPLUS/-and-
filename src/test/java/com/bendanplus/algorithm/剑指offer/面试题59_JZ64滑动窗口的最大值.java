@@ -11,9 +11,8 @@ import java.util.*;
  */
 public class 面试题59_JZ64滑动窗口的最大值 {
 	public ArrayList<Integer> maxInWindows(int[] num, int size) {
-		if (num == null || num.length == 0 || size <= 0 || num.length < size) {
+		if (num == null || num.length == 0 || size <= 0 || num.length < size)
 			return new ArrayList<>();
-		}
 		ArrayList<Integer> res = new ArrayList<>();
 		//大顶堆
 		PriorityQueue<Integer> queue =
