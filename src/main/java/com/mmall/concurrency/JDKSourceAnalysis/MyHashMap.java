@@ -32,7 +32,7 @@ public class MyHashMap<K, V>  {
 	 */
 	final float loadFactor;
 	/**
-	 * The next size value at which to resize (capacity * load factor).
+	 * 扩容阈值 threshold :The next size value at which to resize (capacity * load factor).
 	 * 整个HashMap容量阈(yu)值
 	 * 默认是loadFactor*hash表长 也可以loadFactor*用户自己传一个值
 	 * 最终会变成一个最接近2^n的值(使用@tableSizeFor()方法计算的)
@@ -56,6 +56,7 @@ public class MyHashMap<K, V>  {
 	static final int MIN_TREEIFY_CAPACITY = 64;
 
 	/**
+	 * 1<<30 表示1左移30位，每左移一位乘以2，所以就是1*2^30=1073741824
 	 * 最大初始hash表容量，2^30
 	 * 因为int只有4字节32位，要表示正负，所以正数才31位
 	 * 所以如果超过 2^30的数，是不能乘以2了
@@ -95,6 +96,7 @@ public class MyHashMap<K, V>  {
 
 	//=========================添加==========================
 	public V put(K key, V value) {
+		// TODO key变成hash(key)
 		return putVal(hash(key), key, value, false, true);
 	}
 
@@ -110,6 +112,7 @@ public class MyHashMap<K, V>  {
 		int n, i;
 		if ((tab = table) == null || (n = tab.length) == 0) {
 			//没有初始化 通过 resize()进行初始化数组  Node<K, V>[] table;
+			//延时初始化 第一次插入数据是再进行初始化化
 			n = (tab = resize()).length;
 		}
 		//假设n=16 , 那么key的hash值只有后四位参与的运算 所以让key的高十六位和低十六位进行异或运算可以让节点node更均匀的分配(tab[])
@@ -138,21 +141,22 @@ public class MyHashMap<K, V>  {
 				e = ((TreeNode<K, V>) p).putTreeVal(this, tab, hash, key, value);
 			else {
 				//普通链表节点
-				for (int binCount = 0; ; ++binCount) {
+				for (int binCount = 0; ; ++binCount) {//技数 binCount
 					if ((e = p.next) == null) {//TODO 多个线程同时走到,再往下执行,就会覆盖上一个操作添加的元素, 造成元素丢失
 						//先把新节点插入到链表最后
 						p.next = newNode(hash, key, value, null);
 						/**
 						 * 判断是否超过链表转红黑树阈值
-						 * 链表长度超过8个node则转换为红黑树 前提是  table的最小长度大于64时才转换成红黑树否则扩容
+						 * 链表长度大于等于8个node则转换为红黑树 前提是  table的最小长度大于64时才转换成红黑树否则扩容
+						 * 7个元素 再加入newNode(hash, key, value, null); 正好8个元素
 						 */
 						if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
-							treeifyBin(tab, hash);
+							treeifyBin(tab, hash);//链表长度等于8时,链表转化成红黑树
 						break;
 					}
 					if (e.hash == hash &&
 							((k = e.key) == key || (key != null && key.equals(k))))
-						//如果相等，则break 继续向下变量
+						//如果相等，则break 结束循环 //插入的元素已经存在在hashmap里,重复的元素
 						break;
 					//继续往下执行
 					p = e;
@@ -234,10 +238,10 @@ public class MyHashMap<K, V>  {
 		Node<K, V>[] oldTab = table;
 		//老的table[]数组的长度
 		int oldCap = (oldTab == null) ? 0 : oldTab.length;
-		//老的最大容量大小
+		//老的最大容量大小 The next size value at which to resize (capacity * load factor).
 		int oldThr = threshold;
 		//新的table[]数组的长度和新的最大容量大小
-		int newCap, newThr = 0;
+		int newCap, newThr = 0; // newCap--oldCap   oldThr--newThr
 		//说明已经初始化过了table[]
 		if (oldCap > 0) {
 			if (oldCap >= MAXIMUM_CAPACITY) {
@@ -249,8 +253,9 @@ public class MyHashMap<K, V>  {
 				 */
 				threshold = Integer.MAX_VALUE;
 				return oldTab;
+
 			} else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY &&
-					oldCap >= DEFAULT_INITIAL_CAPACITY)
+					oldCap >= DEFAULT_INITIAL_CAPACITY)// oldCap << 1 左移一位 代表扩容翻一倍
 			/**
 			 *
 			 * newCap容量扩大两倍
@@ -258,8 +263,8 @@ public class MyHashMap<K, V>  {
 			 * 则把容量阈值也扩大两倍
 			 */
 				newThr = oldThr << 1; // double threshold
-			//第一次进行初始化操作 一种是调用有参的构造函数 一种是调用无餐的构造函数进行初始化
-		} else if (oldThr > 0) // initial capacity was placed in threshold
+			//第一次进行初始化操作 一种是调用有参的构造函数 一种是调用无参的构造函数进行初始化
+		} else if (oldThr > 0) // initial capacity was placed in threshold //todo 指定了初始化容量的大小 	int oldThr = threshold;
 			//调用了有参的构造函数，指定了大小 这个地方是将初始化容量赋值给了threshold
 			// 此时的threshold不是个容纳的最大节点数量 而是初始化容量 后面会对该值进行修正
 			newCap = oldThr;
@@ -276,7 +281,7 @@ public class MyHashMap<K, V>  {
 			 * 2.如果newCap = oldCap << 1大于等于MAXIMUM_CAPACITY
 			 *  这里在if判断时已经把oldCap赋值给newCap了
 			 */
-			float ft = (float) newCap * loadFactor;
+			float ft = (float) newCap * loadFactor;//新的扩容阈值
 			newThr = (newCap < MAXIMUM_CAPACITY && ft < (float) MAXIMUM_CAPACITY ?
 					(int) ft : Integer.MAX_VALUE);
 		}
@@ -301,7 +306,7 @@ public class MyHashMap<K, V>  {
 					 * 与下面的链表处理同理(不过多了一个如果红黑树过短，拆成链表的操作)
 					 */
 						((TreeNode<K, V>) e).split(this, newTab, j, oldCap);
-					else { // preserve order
+					else { // preserve order 链表
 						/**
 						 * 一句话总结就是:判断新增加的1bit是0还是1 0还在原来的位置 1放到新的位置table[原来的位置+老容量]
 						 * 原桶中的链表转移到新桶中链表时
@@ -476,7 +481,7 @@ public class MyHashMap<K, V>  {
 	 * key被hash分桶时，只会被用到低几位
 	 * 为了增加平衡的概率，把低位和高位做了异或(使key更均匀分散在桶中)
 	 * java int4个字节，32位长，所以向右移16位，就是高位中的低位
-	 *
+	 * 更加均匀的分布到数组中
 	 * @param key
 	 * @return
 	 */
@@ -489,13 +494,18 @@ public class MyHashMap<K, V>  {
 	/**
 	 * 返回大于且最接近当前值的2^n数
 	 * 计算hash表的长度
-	 *
+	 *  cap =10
+	 *  n = cap-1 = 9
+	 *  1001 | 0100 = 1101
+	 *  1101 | 0011 = 1111
+	 *  1111 | 0000 = 1111
+	 *  .......
 	 * @param cap
 	 * @return
 	 */
 	static final int tableSizeFor(int cap) {
 		int n = cap - 1;
-		n |= n >>> 1;
+		n |= n >>> 1; //右移一位
 		n |= n >>> 2;
 		n |= n >>> 4;
 		n |= n >>> 8;
