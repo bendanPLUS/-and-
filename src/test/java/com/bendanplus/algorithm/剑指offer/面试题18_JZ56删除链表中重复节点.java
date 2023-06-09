@@ -1,6 +1,6 @@
 package com.bendanplus.algorithm.剑指offer;
 
-public class 面试题18_JZ56删除链表中重复结点 {
+public class 面试题18_JZ56删除链表中重复节点 {
 	//需要用递归的思想
 	public ListNode deleteDuplication(ListNode pHead) {
 		if (pHead == null || pHead.next == null)

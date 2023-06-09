@@ -22,9 +22,8 @@ public class 面试题12_JZ65矩阵中的路径 {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
 				res = judge(matrix, visited, word, i, j, 0);
-				if (res) {
+				if (res)
 					return res;
-				}
 			}
 		}
 		return res;
@@ -40,9 +39,8 @@ public class 面试题12_JZ65矩阵中的路径 {
 	 * @return
 	 */
 	public boolean judge(char[][] matrix, boolean[][] visited, String word, int i, int j, int k) {
-		if (k == word.length()) {
+		if (k == word.length())
 			return true;
-		}
 		boolean res = false;
 		if (i >= 0 && i < matrix.length && j >= 0 && j < matrix[0].length &&
 				!visited[i][j] && matrix[i][j] == word.charAt(k)) {

@@ -13,8 +13,7 @@ public class 面试题11旋转数组的最小数字 {
 	}
 
 	public int minNumberInRotateArray(int[] array) {
-		if (array == null || array.length == 0)
-			return 0;
+		if (array == null || array.length == 0) return 0;
 		int p1 = 0;
 		int p2 = array.length - 1;
 		while (p2 > p1 + 1) {
