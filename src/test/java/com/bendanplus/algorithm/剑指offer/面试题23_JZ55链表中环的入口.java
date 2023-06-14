@@ -6,8 +6,7 @@ public class 面试题23_JZ55链表中环的入口 {
 	 *
 	 */
 	public ListNode EntryNodeOfLoop(ListNode pHead) {
-		if (pHead == null || pHead.next == null)
-			return null;
+		if (pHead == null || pHead.next == null) return null;
 		ListNode slow = pHead;
 		ListNode fast = pHead;
 		//快慢指针 一次走一步 一次走两步
