@@ -1,7 +1,33 @@
 package com.bendanplus.algorithm.剑指offer;
 
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+
 //https://www.nowcoder.com/practice/623a5ac0ea5b4e5f95552655361ae0a8?tpId=13&tqId=11203&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking&from=cyc_github
+@Slf4j
 public class 面试题03_JZ50数组中重复的数字 {
+
+    @Test
+    public void test面试题03() {
+        int[] array = {2, 1, 3, 2};
+        log.info("结果:[{}]", duplicate(array));
+    }
+
+    public int duplicate(int[] numbers) {
+        if (numbers == null || numbers.length == 0) return -1;
+        for (int i = 0; i < numbers.length; i++) {
+            //所有数都在 0～n-1范围内
+            //判断一下所有数是否小于长度
+            if (numbers[i] < 0 || numbers[i] > numbers.length - 1) return -1;
+            while (numbers[i] != i) {
+                if (numbers[i] == numbers[numbers[i]]) return numbers[i];
+                else Swap.swap(numbers, i, numbers[i]);
+            }
+        }
+        return -1;
+    }
+
+
 
     //把找到的第一个重复的数字 存放到duplication数组中 duplication[0] = nums[i];
 
@@ -28,4 +54,6 @@ public class 面试题03_JZ50数组中重复的数字 {
         }
         return false;
     }
+
+
 }

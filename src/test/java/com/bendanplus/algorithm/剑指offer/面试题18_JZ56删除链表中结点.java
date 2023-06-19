@@ -15,5 +15,4 @@ public class 面试题18_JZ56删除链表中结点 {
 		}
 		return head;
 	}
-
 }

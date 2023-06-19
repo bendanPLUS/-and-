@@ -16,68 +16,77 @@ import java.util.Collections;
 @Slf4j
 public class 面试题38_全排列_JZ38_字符串的排列 {
 
-	@Test
-	public void test面试题38() {
-		final ArrayList<String> res = permute("abc");
-		log.info("结果:[{}]", res);
-	}
+    @Test
+    public void test面试题38() {
+        final ArrayList<String> res = Permutation("abc");
+        log.info("结果:[{}]", res);
+    }
 
-	private ArrayList<String> ret = new ArrayList<>();
+    private ArrayList<String> res = new ArrayList<>();
 
-	public ArrayList<String> permute(String str) {
-		if (str.length() == 0)
-			return ret;
-		char[] chars = str.toCharArray();
-		Arrays.sort(chars);
-		backtracking(chars, new boolean[chars.length], new StringBuilder());
-		return ret;
-	}
+    public ArrayList<String> permute(String str) {
+        //判空
+        if (str == null || str.length() == 0) return null;
+        //变成char数组
+        char[] chars = str.toCharArray();
+        //排序  重要
+        Arrays.sort(chars);
+        //位置元素使用情况
+        boolean[] isUsed = new boolean[chars.length];
+        StringBuffer s = new StringBuffer();
+        backtracking(chars, isUsed, s);
+        return res;
+    }
 
-	private void backtracking(char[] chars, boolean[] hasUsed, StringBuilder s) {
-		if (s.length() == chars.length) {
-			ret.add(s.toString());
-			return;
-		}
-		for (int i = 0; i < chars.length; i++) {
-			if (hasUsed[i])
-				continue;
-			if (i != 0 && chars[i] == chars[i - 1] && !hasUsed[i - 1]) /* 保证不重复 */
-				continue;
-			hasUsed[i] = true;
-			s.append(chars[i]);
-			backtracking(chars, hasUsed, s);
-			s.deleteCharAt(s.length() - 1);
-			hasUsed[i] = false;
-		}
-	}
-	public ArrayList<String> Permutation(String str) {
-		ArrayList<String> array = new ArrayList();
-		if (StringUtils.isBlank(str))
-			return array;
-		char[] chars = str.toCharArray();
-		Permutation001(chars, array, 0);
-		Collections.sort(array);
-		return array;
-	}
+    public void backtracking(char[] chars, boolean[] isUsed, StringBuffer s) {
+        if (chars.length == s.length()) {
+            res.add(s.toString());
+            return;
+        }
+        for (int i = 0; i < chars.length; i++) {
+            //判断该位置元素是否已经被使用过
+            if (isUsed[i]) continue;
+            //判断是否会出现重复 !isUsed[i - 1]没有被使用 下一层元素就可以使用isUsed[i - 1]位置的元素 就会出现重复
+            if (i != 0 && chars[i - 1] == chars[i] && !isUsed[i - 1]) continue;
+            s.append(chars[i]);
+            //标记该位置元素已经被使用
+            isUsed[i] = true;
+            //循环下一层
+            backtracking(chars, isUsed, s);
+            //排列完成 删除该位置的标记
+            isUsed[i] = false;
+            s.deleteCharAt(s.length() - 1);
+        }
+    }
+
+    public ArrayList<String> Permutation(String str) {
+        ArrayList<String> array = new ArrayList();
+        if (StringUtils.isBlank(str))
+            return array;
+        char[] chars = str.toCharArray();
+        Permutation001(chars, array, 0);
+        Collections.sort(array);
+        return array;
+    }
+
     //
-	private void Permutation001(char[] chars, ArrayList<String> array, int begin) {
-		if (begin == chars.length - 1) {
-			String str = String.valueOf(chars);
-			if (!array.contains(str))
-				array.add(str);
-		} else {
-			for (int i = begin; i < chars.length; i++) {
-				swep(chars, begin, i);
-				Permutation001(chars, array, begin + 1);
-				swep(chars, begin, i);
-			}
-		}
-	}
-	private void swep(char[] chars, int i, int j) {
-		if (chars == null || chars.length == 0)
-			return;
-		char temp = chars[i];
-		chars[i] = chars[j];
-		chars[j] = temp;
-	}
+    private void Permutation001(char[] chars, ArrayList<String> array, int begin) {
+        if (begin == chars.length - 1) {
+            String str = String.valueOf(chars);
+            if (!array.contains(str)) array.add(str);
+        } else {
+            for (int i = begin; i < chars.length; i++) {
+                swap(chars, begin, i);
+                Permutation001(chars, array, begin + 1);
+                swap(chars, begin, i);
+            }
+        }
+    }
+
+    private void swap(char[] chars, int i, int j) {
+        if (chars == null || chars.length == 0) return;
+        char temp = chars[i];
+        chars[i] = chars[j];
+        chars[j] = temp;
+    }
 }
