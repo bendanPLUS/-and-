@@ -11,7 +11,7 @@ import java.util.Scanner;
  * https://www.nowcoder.com/practice/fafbd351003a499f9a80c3f641295f2a?tpId=101&tqId=33199&tPage=2&rp=2&ru=/ta/programmer-code-interview-guide&qru=/ta/programmer-code-interview-guide/question-ranking
  */
 @Slf4j
-public class 面试题48 {
+public class 面试题48_JZ48_最长不含重复字符的子字符串 {
 	public static void main(String[] args) {
 
 		Scanner in = new Scanner(System.in);
@@ -32,7 +32,7 @@ public class 面试题48 {
 		int maxDp = 1;
 		for (int dpIndex = 1; dpIndex < str.length(); dpIndex++) {
 			int i = dpIndex - 1;
-			//dpIndex - dp[dpIndex - 1] 代表 要循环dp[dpIndex - 1]的长度
+			//dpIndex - dp[dpIndex - 1] 代表  以dpIndex-1结尾最长不含重复字符子串 子串的起始位置 从dpIndex-1结束位置 从后往前遍历 --> 直到起始为止dpIndex - dp[dpIndex - 1]
 			for (; i >= dpIndex - dp[dpIndex - 1]; i--)
 				//如果相等说明 到达该点就是dp[i]的长度
 				if (str.charAt(dpIndex) == str.charAt(i)) break;

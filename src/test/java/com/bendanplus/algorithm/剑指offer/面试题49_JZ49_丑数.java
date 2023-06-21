@@ -1,6 +1,5 @@
 package com.bendanplus.algorithm.剑指offer;
 
-import com.oracle.tools.packager.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -14,7 +13,7 @@ import java.util.ArrayList;
  * 习惯上我们把 1 当做是第一个丑数。求按从小到大的顺序的第 N 个丑数。
  */
 @Slf4j
-public class 面试题49 {
+public class 面试题49_JZ49_丑数 {
 	public int GetUglyNumber_Solution(int index) {
 		if (index <= 6) return index;
 		ArrayList<Integer> arrayList = new ArrayList<>();

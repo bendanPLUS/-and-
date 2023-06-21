@@ -22,9 +22,11 @@ public class 面试题45_JZ45_把数组排成最小的数 {
 			//牛客网要求返回空串
 			return "";
 		String[] strArray = new String[numbers.length];
+		StringBuffer sb = new StringBuffer();
+
 		for (int i = 0; i < strArray.length; i++)
 			strArray[i] = String.valueOf(numbers[i]);
-		StringBuffer sb = new StringBuffer();
+
 		Arrays.sort(strArray, (o1, o2) -> (o1 + o2).compareTo(o2 + o1));
 		/**
 		 Arrays.sort(strArray, new Comparator<String>() {
