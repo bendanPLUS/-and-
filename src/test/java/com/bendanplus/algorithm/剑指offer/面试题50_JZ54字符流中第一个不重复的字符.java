@@ -18,7 +18,5 @@ public class 面试题50_JZ54字符流中第一个不重复的字符 {
 		for (int j = 0; j < str.length(); j++)
 			if (cnts[str.charAt(j)] == 1) return j;
 		return -1;
-
-
 	}
 }

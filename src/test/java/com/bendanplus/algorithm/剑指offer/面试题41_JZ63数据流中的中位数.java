@@ -38,7 +38,7 @@ public class 面试题41_JZ63数据流中的中位数 {
 		//偶数 放最大堆
 		if ((count & 1) == 0) {
 			maxHeap.offer(num);
-			minHeap.offer(maxHeap.poll());
+			minHeap.offer(maxHeap.poll()); //第一个数放在小顶堆 右侧
 		} else {
 			//奇数 放最大堆
 			minHeap.offer(num);
@@ -50,6 +50,6 @@ public class 面试题41_JZ63数据流中的中位数 {
 	public static Double GetMedian() {
 		//偶数 取平均数
 		if ((count & 1) == 0) return (maxHeap.peek() + minHeap.peek()) / 2.0;
-		else return new Double(minHeap.peek());
+		else return new Double(minHeap.peek()); //奇数时 小顶堆多一个数 右侧
 	}
 }

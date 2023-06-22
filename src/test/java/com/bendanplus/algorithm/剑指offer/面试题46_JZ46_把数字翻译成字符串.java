@@ -21,6 +21,7 @@ public class 面试题46_JZ46_把数字翻译成字符串 {
     //动态规划
     public int getTranslationCount(String str) {
         if (StringUtils.isBlank(str)) return 0;
+        //dp[i]含义:字符以i开始到dp.length结束 的字符串 可以翻译成多少种结果
         int[] dp = new int[str.length() + 1];
         dp[str.length()] = 1;
         dp[str.length() - 1] = 1;
