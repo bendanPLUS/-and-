@@ -33,6 +33,7 @@ public class 面试题47_JZ47_礼物的最大价值 {
 
     public int maxValue(int[][] grid) {
         if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+        //以(i,j)结尾从(0,0)到(i,j)礼物的最大值
         int[][] dp = new int[grid.length][grid[0].length];
         dp[0][0] = grid[0][0];
         //初始化 边缘位置的值

@@ -11,16 +11,15 @@ public class 面试题39_JZ39_数组中出现次数超过一半的数字 {
         int num = array[0], time = 1, count = 0;
 
         for (int i = 1; i < array.length; i++) {
-            time = num == array[i] ? time + 1 : time - 1;
-            if (time == 0) {
+            time = num == array[i] ? time + 1 : time - 1;//一换一原则
+            if (time == 0) {//重置
                 num = array[i];
                 time = 1;
             }
         }
         //记录下num出现过几次 是否超过一半
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 0; i < array.length; i++)
             if (array[i] == num) count++;
-        }
         return 2 * count <= array.length ? 0 : num;
     }
 

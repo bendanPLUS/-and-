@@ -8,6 +8,7 @@ public class 面试题37_JZ61序列化二叉树 {
 	int index = -1;
 	private String deserializeStr;
 
+	//序列化
 	String Serialize(TreeNode root) {
 		StringBuffer res = new StringBuffer();
 		if (root == null) {
@@ -19,7 +20,7 @@ public class 面试题37_JZ61序列化二叉树 {
 		res.append(Serialize(root.right));
 		return res.toString();
 	}
-
+	//反序列化
 	TreeNode Deserialize(String str) {
 		index++;
 		String[] s = str.split(",");

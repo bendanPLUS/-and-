@@ -38,6 +38,7 @@ public class 面试题38_全排列_JZ38_字符串的排列 {
         return res;
     }
 
+    //此方法像是选元素 选一个元素出来 在0位置 再选第二个元素出来再1位置 .... 再选第i个元素出来在i位置 ....以此类推
     public void backtracking(char[] chars, boolean[] isUsed, StringBuffer s) {
         if (chars.length == s.length()) {
             res.add(s.toString());
@@ -46,6 +47,7 @@ public class 面试题38_全排列_JZ38_字符串的排列 {
         for (int i = 0; i < chars.length; i++) {
             //判断该位置元素是否已经被使用过
             if (isUsed[i]) continue;
+            //去重
             //判断是否会出现重复 !isUsed[i - 1]没有被使用 下一层元素就可以使用isUsed[i - 1]位置的元素 就会出现重复
             if (i != 0 && chars[i - 1] == chars[i] && !isUsed[i - 1]) continue;
             s.append(chars[i]);
@@ -69,7 +71,7 @@ public class 面试题38_全排列_JZ38_字符串的排列 {
         return array;
     }
 
-    //
+    //交换位置 自己和自己交换 再和自己后面一位的元素交换 以此类推
     private void Permutation001(char[] chars, ArrayList<String> array, int begin) {
         if (begin == chars.length - 1) {
             String str = String.valueOf(chars);

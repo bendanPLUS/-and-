@@ -11,8 +11,15 @@ public class 面试题41_JZ63数据流中的中位数 {
 	private static int count = 0;
 	//最小堆
 	private static PriorityQueue<Integer> minHeap = new PriorityQueue<>();
-
-
+	//最大堆
+	private static PriorityQueue<Integer> maxHeap = new PriorityQueue<>(15, (o1, o2) -> o2.compareTo(o1));
+	//	private PriorityQueue<Integer> maxHeap =
+//			new PriorityQueue<>(15, new Comparator<Integer>() {
+//				@Override
+//				public int compare(Integer o1, Integer o2) {
+//					return o2.compareTo(o1);
+//				}
+//			});
 	public static void main(String[] args) {
 		int[] nums = new int[]{5, 2, 3, 4, 1, 6, 7, 0, 8};
 		for (int i = 0; i < nums.length; i++) {
@@ -21,19 +28,6 @@ public class 面试题41_JZ63数据流中的中位数 {
 			System.out.println("aDouble===" + aDouble);
 		}
 	}
-
-//	private PriorityQueue<Integer> maxHeap =
-//			new PriorityQueue<>(15, new Comparator<Integer>() {
-//				@Override
-//				public int compare(Integer o1, Integer o2) {
-//					return o2.compareTo(o1);
-//				}
-//			});
-
-	//最大堆
-	private static PriorityQueue<Integer> maxHeap = new PriorityQueue<>(15, (o1, o2) -> o2.compareTo(o1));
-
-
 	public static void Insert(Integer num) {
 		//偶数 放最大堆
 		if ((count & 1) == 0) {
@@ -46,7 +40,6 @@ public class 面试题41_JZ63数据流中的中位数 {
 		}
 		count++;
 	}
-
 	public static Double GetMedian() {
 		//偶数 取平均数
 		if ((count & 1) == 0) return (maxHeap.peek() + minHeap.peek()) / 2.0;

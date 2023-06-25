@@ -1,5 +1,7 @@
 package com.bendanplus.algorithm.剑指offer;
 
+import java.util.Arrays;
+
 /**
  * 一个整型数组里除了两个数字之外，其他的数字都出现了两次，找出这两个数。
  * 传送门:https://www.nowcoder.com/practice/e02fdb54d7524710a7d664d082bb7811?tpId=13
@@ -22,13 +24,8 @@ public class 面试题56_JZ40数组中只出现一次的两个数字 {
             else
                 res[1] ^= num;
         }
-        if (res[0] > res[1])
-            swap(res);
+        Arrays.sort(res);
         return res;
     }
-    private void swap(int[] nums) {
-        int t = nums[0];
-        nums[0] = nums[1];
-        nums[1] = t;
-    }
+
 }
