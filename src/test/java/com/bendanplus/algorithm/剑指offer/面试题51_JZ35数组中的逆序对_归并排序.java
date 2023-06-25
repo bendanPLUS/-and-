@@ -72,7 +72,7 @@ public class 面试题51_JZ35数组中的逆序对_归并排序 {
         mergeSort(array, mid + 1, right, copy);
         //排序
         //现在左边右边数组都已经排好序 把整个数组排好序
-        sort1(array, left, mid, right, copy);
+        sort1(array,  left, mid, right, copy);
     }
 
     private void sort1(int[] array, int left, int mid, int right, int[] copy) {
