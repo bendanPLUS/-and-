@@ -8,15 +8,15 @@ import org.apache.commons.lang3.StringUtils;
  * 在一个字符串中找到第一个只出现一次的字符，并返回它的位置。
  */
 public class 面试题50_JZ54字符流中第一个不重复的字符 {
-	public int FirstNotRepeatingChar(String str) {
-		//ASCII 码只有 128 个字符，因此可以使用长度为 128 的整型数组来存储每个字符出现的次数
-		if (str == null || str.length() == 0) return 0;
-		int[] cnts = new int[256];
-		for (int i = 0; i < str.length(); i++)
-			cnts[str.charAt(i)]++;
+    public int FirstNotRepeatingChar(String str) {
+        //ASCII 码只有 128 个字符，因此可以使用长度为 128 的整型数组来存储每个字符出现的次数
+        if (str == null || str.length() == 0) return 0;
+        int[] cnts = new int[256];
+        for (int i = 0; i < str.length(); i++)
+            cnts[str.charAt(i)]++;
 
-		for (int j = 0; j < str.length(); j++)
-			if (cnts[str.charAt(j)] == 1) return j;
-		return -1;
-	}
+        for (int j = 0; j < str.length(); j++)
+            if (cnts[str.charAt(j)] == 1) return j;
+        return -1;
+    }
 }

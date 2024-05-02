@@ -17,6 +17,7 @@ public class SafeDoubleCheckLocking双重检验锁 {
     // 1、memory = allocate() 分配对象的内存空间
     // 2、ctorInstance() 初始化对象
     // 3、instance = memory 设置instance指向刚分配的内存
+    //volatile读的内存语义:一个volatile变量的读 总是能看到该volatile变量最后的写入
 
     // 单例对象 volatile + 双重检测机制 -> 禁止指令重排
     private volatile static SafeDoubleCheckLocking双重检验锁 instance = null;

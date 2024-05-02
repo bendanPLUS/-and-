@@ -18,11 +18,37 @@ public class 面试题38_全排列_JZ38_字符串的排列 {
 
     @Test
     public void test面试题38() {
-        final ArrayList<String> res = Permutation("abc");
+        final ArrayList<String> res = Permutation777("aca");
         log.info("结果:[{}]", res);
     }
 
-    private ArrayList<String> res = new ArrayList<>();
+    ArrayList<String> res = new ArrayList<String>();
+    StringBuffer sb = new StringBuffer();
+
+    public ArrayList<String> Permutation777(String str) {
+        if (str == null || str.length() == 0) return new ArrayList<String>();
+        int len = str.length();
+        boolean[] used = new boolean[len];
+        permutation777(used, str);
+        return res;
+    }
+
+    public void permutation777(boolean[] used, String str) {
+        if (sb.length() == str.length() && !res.contains(sb.toString())) {
+            res.add(sb.toString());
+            return;
+        }
+        for (int i = 0; i < str.length(); i++) {
+            if (used[i]) continue;
+            sb.append(str.charAt(i));
+            used[i] = true;
+            permutation777(used, str);
+            used[i] = false;
+            sb.deleteCharAt(sb.length() - 1);
+        }
+    }
+
+    //private ArrayList<String> res = new ArrayList<>();
 
     public ArrayList<String> permute(String str) {
         //判空
@@ -48,7 +74,7 @@ public class 面试题38_全排列_JZ38_字符串的排列 {
             //判断该位置元素是否已经被使用过
             if (isUsed[i]) continue;
             //去重
-            //判断是否会出现重复 !isUsed[i - 1]没有被使用 下一层元素就可以使用isUsed[i - 1]位置的元素 就会出现重复
+            //判断是否会出现重复 !isUsed[i - 1]没有被使用 这一层使用i位置元素 下一层元素就可以使用isUsed[i - 1]位置的元素 就会出现重复
             if (i != 0 && chars[i - 1] == chars[i] && !isUsed[i - 1]) continue;
             s.append(chars[i]);
             //标记该位置元素已经被使用
@@ -63,8 +89,7 @@ public class 面试题38_全排列_JZ38_字符串的排列 {
 
     public ArrayList<String> Permutation(String str) {
         ArrayList<String> array = new ArrayList();
-        if (StringUtils.isBlank(str))
-            return array;
+        if (StringUtils.isBlank(str)) return array;
         char[] chars = str.toCharArray();
         Permutation001(chars, array, 0);
         Collections.sort(array);
@@ -75,7 +100,7 @@ public class 面试题38_全排列_JZ38_字符串的排列 {
     private void Permutation001(char[] chars, ArrayList<String> array, int begin) {
         if (begin == chars.length - 1) {
             String str = String.valueOf(chars);
-            if (!array.contains(str)) array.add(str);
+            if (!array.contains(str)) array.add(str);//去重
         } else {
             for (int i = begin; i < chars.length; i++) {
                 swap(chars, begin, i);

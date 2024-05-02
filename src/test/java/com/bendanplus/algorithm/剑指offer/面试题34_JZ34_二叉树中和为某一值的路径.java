@@ -17,6 +17,7 @@ public class 面试题34_JZ34_二叉树中和为某一值的路径 {
 		return result;
 	}
 
+	//递归 前序遍历
 	private void backtracking(TreeNode node, int target, ArrayList<Integer> path) {
 		if (node == null) return;
 		path.add(node.val);

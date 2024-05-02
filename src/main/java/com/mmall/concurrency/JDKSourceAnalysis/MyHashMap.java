@@ -41,7 +41,7 @@ public class MyHashMap<K, V>  {
 	int threshold;
 
 	/**
-	 * 链表节点转换红黑树节点的阈值, 9个节点转
+	 * 链表节点转换红黑树节点的阈值, 8个节点转
 	 */
 	static final int TREEIFY_THRESHOLD = 8;
 
@@ -53,7 +53,7 @@ public class MyHashMap<K, V>  {
 	/**
 	 * 转红黑树时, table的最小长度
 	 */
-	static final int MIN_TREEIFY_CAPACITY = 64;
+	static final int MIN_TREEIFY_CAPACITY = 64;//当哈希表中的所有元素个数超过64时，才会允许树化
 
 	/**
 	 * 1<<30 表示1左移30位，每左移一位乘以2，所以就是1*2^30=1073741824
@@ -67,6 +67,7 @@ public class MyHashMap<K, V>  {
 
 	/**
 	 * 节点数量
+	 * size属性指的就是键值总数
 	 */
 	transient int size;
 
@@ -102,18 +103,16 @@ public class MyHashMap<K, V>  {
 
 	final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 	               boolean evict) {
+		//tab：引用当前hashMap的散列表
+		//p：表示当前散列表的元素
+		//n：表示散列表数组的长度
+		//i：表示路由寻址 结果
 		Node<K, V>[] tab;
 		Node<K, V> p;
-		/**
-		 * n 记录hash表长 数组的长度
-		 * i
-		 * 判断当前数组是否已经进行初始化?
-		 */
 		int n, i;
 		if ((tab = table) == null || (n = tab.length) == 0) {
-			//没有初始化 通过 resize()进行初始化数组  Node<K, V>[] table;
-			//延时初始化 第一次插入数据是再进行初始化化
-			n = (tab = resize()).length;
+			//延时初始化 第一次插入数据是再进行初始化化 resize()进行初始化数组
+			n = (tab = resize()).length;//n：表示散列表数组的长度
 		}
 		//假设n=16 , 那么key的hash值只有后四位参与的运算 所以让key的高十六位和低十六位进行异或运算可以让节点node更均匀的分配(tab[])
 		/**
@@ -121,29 +120,29 @@ public class MyHashMap<K, V>  {
 		 * 所以这线程A、B都会进入第6行代码中。假设一种情况，线程A进入后还未进行数据插入时挂起，而线程B正常执行，从而正常插入数据，
 		 * 然后线程A获取CPU时间片，此时线程A不用再进行hash判断了，问题出现：线程A会把线程B插入的数据给覆盖，发生线程不安全
 		 */
+		//TODO (n - 1) & hash = 1111&hash  hash值的后四位决定落在那个槽里
 		//TODO 多个线程同时走到,再往下执行,就会覆盖上一个操作添加的元素, 造成元素丢失
-		if ((p = tab[i = (n - 1) & hash]) == null)// 如果没有hash碰撞则直接插入元素
+		//TODO 刚好这两条不同的数据 (n - 1) & hash值一样(即hash值的后四位相同)，并且该位置数据为null
+		if ((p = tab[i = (n - 1) & hash]) == null)// 如果没有hash碰撞则直接插入元素 TODO 此处线程不安全 (key.hashCode()^key.hashCode()>>>16) & (n - 1) 解释起来就是 key.hashCode值进行高16位与低16位进行异或运算 再与 n-1进行与运算
 			//如果表当前桶没有节点，则直接添加(第一个)
 			tab[i] = newNode(hash, key, value, null);
 		else {
-			/**
-			 * 如果表的桶中有数据
-			 * p就是桶中的那一个
-			 */
+			//e：不为null的话，找到了一个与当前要插入的key-value相同key的元素
+			//k：表示临时的一个key
 			Node<K, V> e;
 			K k;
 			if (p.hash == hash &&
 					((k = p.key) == key || (key != null && key.equals(k))))
-				//如果p的key与要插入的key一样 内存地址一样 内容也一样 直接覆盖
+				//当前元素p与插入元素的key相同 并且hash(key)也相同 则 直接覆盖当前元素p
 				e = p;
-			else if (p instanceof TreeNode)
+			else if (p instanceof TreeNode)//当前元素p的结构是红黑树
 				//如果是红黑树，则查找是否已有相同的key
 				e = ((TreeNode<K, V>) p).putTreeVal(this, tab, hash, key, value);
 			else {
-				//普通链表节点
-				for (int binCount = 0; ; ++binCount) {//技数 binCount
+				//普通链表节点 尾插法
+				for (int binCount = 0; ; ++binCount) {//计数 binCount
 					if ((e = p.next) == null) {//TODO 多个线程同时走到,再往下执行,就会覆盖上一个操作添加的元素, 造成元素丢失
-						//先把新节点插入到链表最后
+						//p.next == null 说明已经到最后一个节点了
 						p.next = newNode(hash, key, value, null);
 						/**
 						 * 判断是否超过链表转红黑树阈值
@@ -151,15 +150,16 @@ public class MyHashMap<K, V>  {
 						 * 7个元素 再加入newNode(hash, key, value, null); 正好8个元素
 						 */
 						if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
-							treeifyBin(tab, hash);//链表长度等于8时,链表转化成红黑树
+							// 链表长度等于8时,链表转化成红黑树 table的最小长度小于64时 进行扩容 不转红黑树
+							treeifyBin(tab, hash);
 						break;
 					}
 					if (e.hash == hash &&
 							((k = e.key) == key || (key != null && key.equals(k))))
-						//如果相等，则break 结束循环 //插入的元素已经存在在hashmap里,重复的元素
+						//如果相等，则break 结束循环
 						break;
 					//继续往下执行
-					p = e;
+					p = e;//p = p.next 一直遍历 直到break
 				}
 			}
 			/**
@@ -168,6 +168,7 @@ public class MyHashMap<K, V>  {
 			 * 并返回旧值
 			 * onlyIfAbsent 默认是false return putVal(hash(key), key, value, onlyIfAbsent -> false, true);
 			 */
+			//e不等于null，条件成立说明，找到了一个与你插入元素key完全一致的数据，需要进行替换
 			if (e != null) { // existing mapping for key
 				V oldValue = e.value;
 				if (!onlyIfAbsent || oldValue == null)
@@ -176,8 +177,10 @@ public class MyHashMap<K, V>  {
 				return oldValue;
 			}
 		}
-
-		if (++size > threshold)
+		// 是否大于12?
+		//如果是旧值覆盖已经return oldValue了
+		//插入新元素，size自增，如果自增后的值大于扩容阈值，则触发扩容。
+		if (++size > threshold) //size属性指的就是键值总数 大于扩容阈值 没有等于
 			resize();
 //        afterNodeInsertion(evict);
 		return null;
@@ -201,7 +204,7 @@ public class MyHashMap<K, V>  {
 		 * 如果hash表还没到设置的最小长度（MIN_TREEIFY_CAPACITY）
 		 * 则先扩展hash表
 		 */
-		if (tab == null || (n = tab.length) < MIN_TREEIFY_CAPACITY)
+		if (tab == null || (n = tab.length) < MIN_TREEIFY_CAPACITY)//小于64 没有等于
 			resize();
 		else if ((e = tab[index = (n - 1) & hash]) != null) {
 			//作用在增加数据的桶
@@ -239,8 +242,10 @@ public class MyHashMap<K, V>  {
 		//老的table[]数组的长度
 		int oldCap = (oldTab == null) ? 0 : oldTab.length;
 		//老的最大容量大小 The next size value at which to resize (capacity * load factor).
-		int oldThr = threshold;
+		int oldThr = threshold;//表示扩容之前的扩容阈值，触发本次扩容的阈值
 		//新的table[]数组的长度和新的最大容量大小
+		//newCap：扩容之后table数组的大小
+		//newThr：扩容之后，下次再次触发扩容的条件
 		int newCap, newThr = 0; // newCap--oldCap   oldThr--newThr
 		//说明已经初始化过了table[]
 		if (oldCap > 0) {
@@ -264,7 +269,7 @@ public class MyHashMap<K, V>  {
 			 */
 				newThr = oldThr << 1; // double threshold
 			//第一次进行初始化操作 一种是调用有参的构造函数 一种是调用无参的构造函数进行初始化
-		} else if (oldThr > 0) // initial capacity was placed in threshold //todo 指定了初始化容量的大小 	int oldThr = threshold;
+		} else if (oldThr > 0) // oldCap==0 & oldThr > 0 调用有参的构造函数  设置了初始化容量的大小 	int oldThr = threshold;
 			//调用了有参的构造函数，指定了大小 这个地方是将初始化容量赋值给了threshold
 			// 此时的threshold不是个容纳的最大节点数量 而是初始化容量 后面会对该值进行修正
 			newCap = oldThr;
@@ -288,17 +293,18 @@ public class MyHashMap<K, V>  {
 		threshold = newThr;
 		@SuppressWarnings({"rawtypes", "unchecked"})
 		Node<K, V>[] newTab = (Node<K, V>[]) new Node[newCap];// TODO
+		//如果是第一次扩容到这里就结束了
 		table = newTab;// TODO 此时实例变量table是空的 如果此时另一个线程执行get时，就会get出null
-		if (oldTab != null) {
+		if (oldTab != null) { //说明，hashMap本次扩容之前，table不为null
 			/**
 			 * 遍历老hash表
 			 */
 			for (int j = 0; j < oldCap; ++j) {
-				Node<K, V> e;
-				if ((e = oldTab[j]) != null) {
-					oldTab[j] = null;
+				Node<K, V> e;// e当前node节点
+				if ((e = oldTab[j]) != null) { //说明当前桶位中有数据，但是数据具体是 单个数据，还是链表 还是 红黑树 并不知道
+					oldTab[j] = null; // for GC
 					if (e.next == null)
-						//如果老hash表只有一个头，直接复制到新hash表
+						//第一种情况：当前桶位只有一个元素，从未发生过碰撞，这情况 直接计算出当前元素应存放在 新数组中的位置，然后扔进去就可以了
 						newTab[e.hash & (newCap - 1)] = e;
 					else if (e instanceof TreeNode)
 					/**
@@ -306,7 +312,7 @@ public class MyHashMap<K, V>  {
 					 * 与下面的链表处理同理(不过多了一个如果红黑树过短，拆成链表的操作)
 					 */
 						((TreeNode<K, V>) e).split(this, newTab, j, oldCap);
-					else { // preserve order 链表
+					else { // e.next != null 第三种情况：桶位已经形成链表
 						/**
 						 * 一句话总结就是:判断新增加的1bit是0还是1 0还在原来的位置 1放到新的位置table[原来的位置+老容量]
 						 * 原桶中的链表转移到新桶中链表时
@@ -322,14 +328,14 @@ public class MyHashMap<K, V>  {
 						 * 把原来的链表拆到这两个新链表里面
 						 * 最后把这两个新链表挂到新hash表上
 						 */
-						Node<K, V> loHead = null, loTail = null;
-						Node<K, V> hiHead = null, hiTail = null;
+						Node<K, V> loHead = null, loTail = null;  //低位链表：存放在扩容之后的数组的下标位置，与当前数组的下标位置一致。
+						Node<K, V> hiHead = null, hiTail = null;  //高位链表：存放在扩容之后的数组的下表位置为 当前数组下标位置 + 扩容之前数组的长度  index=15=>index=31
 						Node<K, V> next;
 						do {
 							next = e.next;
 							//判断新增加的1bit是0还是1 0还在原来的位置
-							if ((e.hash & oldCap) == 0) {
-								if (loTail == null)
+							if ((e.hash & oldCap) == 0) { // 以前确定位置是 e.hash&(n-1) -> e.hash&(oldCap-1)
+								if (loTail == null) //是0放到新的位置table[原来的位置]
 									loHead = e;
 								else
 									loTail.next = e;
@@ -343,13 +349,14 @@ public class MyHashMap<K, V>  {
 								hiTail = e;
 							}
 						} while ((e = next) != null);
+						// 采用头插法
 						if (loTail != null) {
 							loTail.next = null;
-							newTab[j] = loHead;
+							newTab[j] = loHead;// 存放头节点 是0放到新的位置table[原来的位置]
 						}
 						if (hiTail != null) {
 							hiTail.next = null;
-							newTab[j + oldCap] = hiHead;
+							newTab[j + oldCap] = hiHead;//存放头节点 1放到新的位置table[原来的位置+老容量]
 						}
 					}
 				}
@@ -435,6 +442,10 @@ public class MyHashMap<K, V>  {
 	}
 
 	final Node<K, V> getNode(int hash, Object key) {
+		//tab：引用当前hashMap的散列表
+		//first：桶位中的头元素
+		//e：临时node元素
+		//n：table数组长度
 		Node<K, V>[] tab;
 		Node<K, V> first, e;
 		int n;
@@ -482,8 +493,16 @@ public class MyHashMap<K, V>  {
 	 * 为了增加平衡的概率，把低位和高位做了异或(使key更均匀分散在桶中)
 	 * java int4个字节，32位长，所以向右移16位，就是高位中的低位
 	 * 更加均匀的分布到数组中
-	 * @param key
-	 * @return
+	 */
+	/**
+	 *TODO 如果key不为空，并且取到k的hash值为：
+	 * h1 = 0b 0010 0101 1010 1100 0011 1111 0010 1110  将它无符号右移16位后做异或运算
+	 * ^
+	 * h2 = 0b 0000 0000 0000 0000 0010 0101 1010 1100
+	 *   => 0b 0010 0101 1010 1100 0001 1010 1000 0010
+	 *   主要目的就是为了让hash值更加分散不重复 防止hash冲突
+	 *
+	 *
 	 */
 	static final int hash(Object key) {
 		int h;
@@ -496,14 +515,27 @@ public class MyHashMap<K, V>  {
 	 * 计算hash表的长度
 	 *  cap =10
 	 *  n = cap-1 = 9
-	 *  1001 | 0100 = 1101
-	 *  1101 | 0011 = 1111
-	 *  1111 | 0000 = 1111
-	 *  .......
-	 * @param cap
-	 * @return
+	    n |= n >>> 1; 无符号右移一位1001前面加1个0后面舍去最后1位得0b0100
+	    0b1001 | 0b0100 => 0b1101
+	    n |= n >>> 2;无符号右二位1101前面加2个0后面舍去最后2位得0b0100
+	    0b1101 | 0b0011 => 0b1111
+	    n |= n >>> 4;
+	    0b1111 | 0b0000 => 0b1111
+	    n |= n >>> 8;
+	    0b1111 | 0b0000 => 0b1111
+	     n |= n >>> 16;
+	    0b1111 | 0b0000 => 0b1111
+	     你会发现到最后其实都是一样的了。
+	     那么n=0b1111 转换为10进制为：
+	     (1*2的0次方=1)+(1*2的1次方=2)+(1*2的2次方=4)+(1*2的3次方=8)=1+2+4+8=15
+	     (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+	     n=15不小于0，并且不大于容量的最大值，则n=n+1=16。
+	 *
 	 */
-	static final int tableSizeFor(int cap) {
+	//TODO cap =10 n = cap-1 = 9 (1001)  这个计算的目的就是 把 1001变成1111 -> 即大于或等于cap的最小2的幂
+	//第一步 int n = cap - 1; 这个操作，执行这个操作的主要原因是为了防止在cap已经是2的n次幂的情况下，
+	//经过运算后得到的结果是cap的二倍的结果
+	static final int tableSizeFor(int cap) {//找到大于或等于cap的最小2的幂
 		int n = cap - 1;
 		n |= n >>> 1; //右移一位
 		n |= n >>> 2;

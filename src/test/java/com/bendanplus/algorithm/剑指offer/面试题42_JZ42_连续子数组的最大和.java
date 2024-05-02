@@ -8,6 +8,32 @@ package com.bendanplus.algorithm.剑指offer;
 public class 面试题42_JZ42_连续子数组的最大和 {
 
 	public int FindGreatestSumOfSubArray(int[] array) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		int maxSum = array[0];
 		int curSum = array[0];
 		for (int i = 1; i < array.length; i++) {

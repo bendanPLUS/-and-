@@ -11,14 +11,50 @@ public class 面试题33_JZ33_二叉搜索树的后序遍历序列 {
 
 
     @Test
-    public void test面试题11() {
+    public void test面试题33() {
         int[] array = {10, 2, 6};
-        log.info("结果:[{}]", VerifySquenceOfBST1(array));
+        log.info("结果:[{}]", VerifySquenceOfBST(array, 0, array.length - 1));
+    }
+
+
+
+
+
+    public boolean VerifySquenceOfBST(int[] sequence, int left, int right) {
+        if (right - left <= 1) return true;
+        int root = sequence[right];
+        int i = left;
+        for (; i < right; i++) {
+            if (root < sequence[i]) break;
+        }
+        for (int j = i; j < right; j++) {
+            if (sequence[j] < root) return false;
+        }
+
+        boolean lefts = VerifySquenceOfBST(sequence, left, i - 1);
+        boolean rights = VerifySquenceOfBST(sequence, i, right - 1);
+
+        return rights & lefts;
     }
 
     public boolean VerifySquenceOfBST1(int[] sequence) {
         if (sequence == null || sequence.length == 0) return false;
         return VerifySquenceOfBST1(sequence, 0, sequence.length - 1);
+    }
+
+
+    public boolean VerifySquenceOfBST2(int[] sequence, int start, int end) {
+        if (end - start <= 1) return true;
+        int index = start;
+        int root = sequence[end];
+        for (; index < end; index++) {
+            if (sequence[index] > root) break;
+            for (int j = index; j < end; j++)
+                if (sequence[index] < root) return false;
+        }
+        boolean left = VerifySquenceOfBST2(sequence, start, index - 1);
+        boolean right = VerifySquenceOfBST2(sequence, index, end - 1);
+        return left & right;
     }
 
     public boolean VerifySquenceOfBST1(int[] sequence, int start, int end) {
@@ -29,8 +65,7 @@ public class 面试题33_JZ33_二叉搜索树的后序遍历序列 {
             if (sequence[index] > root) break;
         for (int i = index; i < end; ++i)
             if (sequence[i] < root) return false;
-        return VerifySquenceOfBST1(sequence, start, index - 1) &&
-                VerifySquenceOfBST1(sequence, index, end - 1);
+        return VerifySquenceOfBST1(sequence, start, index - 1) && VerifySquenceOfBST1(sequence, index, end - 1);
     }
 
     public boolean VerifySequenceOfBST(int[] sequence) {
@@ -49,8 +84,7 @@ public class 面试题33_JZ33_二叉搜索树的后序遍历序列 {
             if (sequence[index] < root) return false;
             index++;
         }
-        return VerifySequenceOfBST(sequence, start, leftEnd) && VerifySequenceOfBST(sequence, rightStart, end - 1
-        );
+        return VerifySequenceOfBST(sequence, start, leftEnd) && VerifySequenceOfBST(sequence, rightStart, end - 1);
     }
 
 

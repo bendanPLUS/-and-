@@ -6,15 +6,16 @@ public class 面试题23_JZ55链表中环的入口 {
      */
     public ListNode EntryNodeOfLoop(ListNode pHead) {
         if (pHead == null || pHead.next == null) return null;
-        ListNode slow = pHead;
-        ListNode fast = pHead;
+        ListNode slow = pHead, fast = pHead;
         //快慢指针 一次走一步 一次走两步
         //do-while语句 先执行，后判断
+        //1.找到相遇的节点
         do {
             if (fast == null || fast.next == null) return null;
             fast = fast.next.next;
             slow = slow.next;
         } while (slow != fast);
+        //2.找到环的入口
         fast = pHead;
         while (slow != fast) {
             fast = fast.next;

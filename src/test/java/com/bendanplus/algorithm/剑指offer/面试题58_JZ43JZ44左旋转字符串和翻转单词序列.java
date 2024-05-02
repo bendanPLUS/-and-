@@ -24,7 +24,7 @@ public class 面试题58_JZ43JZ44左旋转字符串和翻转单词序列 {
                 left = i;
             }
         }
-        if (chars[chars.length - 1] != ' ')
+        if (chars[chars.length - 1] != ' ')  //尾部字符串单独处理
             reverse(chars, left + 1, chars.length - 1);
         return new String(chars);
     }

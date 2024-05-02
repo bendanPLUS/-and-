@@ -12,20 +12,41 @@ import java.util.Arrays;
  * 如何理解x&(-x)和x&(x-1)  https://www.cnblogs.com/yzxag/p/12668034.html
  */
 public class 面试题56_JZ40数组中只出现一次的两个数字 {
+    /**
+     * TODO  距离说明 [1,4,1,6]    1^100^1^110 = 010 100=4 110=6 4和6在第二位上不同
+     */
     public int[] FindNumsAppearOnce(int[] nums) {
         int[] res = new int[2];
+        if (nums == null || nums.length == 0) return res;
         int diff = 0;
         for (int num : nums)
-            diff ^= num;
-        diff &= -diff;//通过最右边第一个1的位置 来区分两个数
+            diff ^= num; //相同为0 相异为0
+        int k = 1;
+        //从左向右 找到两个数不相同的第一位
+        while ((k & diff) == 0) k <<= 1;
         for (int num : nums) {
-            if ((num & diff) == 0)
+            if ((num & k) == 0) {
                 res[0] ^= num;
-            else
-                res[1] ^= num;
+            } else res[1] ^= num;
         }
         Arrays.sort(res);
         return res;
     }
 
+
+    public int[] findNumsAppearOnce(int[] nums) {
+        if (nums == null || nums.length == 0) return new int[2];
+        int[] res = new int[2];
+        int diff = 0;
+        for (int num : nums)
+            diff ^= num;
+        //从左往右 找出第一位为1的 位置
+        int k = 1;
+        while ((k & diff) != 1) k >>= 1;
+        for (int num : nums) {
+            if ((k & num) == 0) res[0] ^= num;
+            else res[1] ^= num;
+        }
+        return res;
+    }
 }

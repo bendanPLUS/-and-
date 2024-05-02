@@ -21,14 +21,28 @@ public class 面试题47_JZ47_礼物的最大价值 {
 
     @Test
     public void test面试题47() {
-        int[][] grid = new int[][]{
-                new int[]{1, 3, 1},
-                new int[]{1, 5, 1},
-                new int[]{4, 2, 1}};
+        int[][] grid = new int[][]{new int[]{1, 2, 5}, new int[]{3, 2, 1}};
 
 
-        int i = maxValue2(grid);
+        int i = maxValue5(grid);
         log.info("translationCount is {}", 2);
+    }
+
+
+    public int maxValue5(int[][] grid) {
+        if (grid == null || grid.length == 0) return -1;
+
+        int[] dp = new int[grid[0].length];
+        dp[0] = grid[0][0];
+        for (int i = 1; i < grid[0].length; i++)
+            dp[i] = grid[0][i] + dp[i - 1];
+
+        for (int i = 1; i < grid.length; i++) {
+            dp[0] += grid[i][0];
+            for (int j = 1; j < grid[0].length; j++)
+                dp[j] = Math.max(dp[j], dp[j - 1]) + grid[i][j];
+        }
+        return dp[dp.length - 1];
     }
 
     public int maxValue(int[][] grid) {
@@ -68,8 +82,7 @@ public class 面试题47_JZ47_礼物的最大价值 {
     }
 
     public int maxValue3(int[][] grid) {
-        if (grid == null || grid.length == 0 || grid[0].length == 0)
-            return 0;
+        if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
         int n = grid[0].length; //总共n列
         int[] dp = new int[n];
         for (int[] grids : grid) {//一行一行元素拿出来

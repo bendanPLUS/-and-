@@ -14,14 +14,54 @@ import java.util.Scanner;
 public class 面试题48_JZ48_最长不含重复字符的子字符串 {
     public static void main(String[] args) {
 
-        Scanner in = new Scanner(System.in);
-        int n = in.nextInt();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < n; i++) {
-            sb.append(in.nextInt());
+//        Scanner in = new Scanner(System.in);
+//        int n = in.nextInt();
+//        StringBuilder sb = new StringBuilder();
+//        for (int i = 0; i < n; i++) {
+//            sb.append(in.nextInt());
+//        }
+        String s = new String("sdajaldjladjdfsjladjladjl");
+        log.info("结果等于 {}", lengthOfLongestSubstring1(s));
+        log.info("结果等于 {}", longestSubstring(s));
+        log.info("结果等于 {}", longestSubstringWithoutDuo(s));
+        log.info("结果等于 {}", lengthOfLongestSubstring(s));
+
+    }
+
+
+    public static int longestSubstring(String s) {
+        if (s == null || s.length() == 0) return -1;
+        int[] dp = new int[s.length()]; //dp[i]代表的含义是以i为结尾的 最长子串的长度
+        dp[0] = 1;
+        int max = 1;
+        for (int i = 1; i < s.length(); i++) {
+            int len = dp[i - 1];
+            int l = i - len;
+            int h = i - 1;
+            for (; h >= l; h--)
+                if (s.charAt(i) == s.charAt(h)) break;
+            dp[i] = i - h;
+            max = max > dp[i] ? max : dp[i];
         }
-        final int i = longestSubstringWithoutDuo(sb.toString());
-        log.info("结果等于 {}", i);
+        return max;
+    }
+
+
+    public static int lengthOfLongestSubstring1(String s) {
+        if (s == null || s.length() == 0) return -1;
+        //以i为结尾的字符串 最长不包含重复字符 长度
+        int[] dp = new int[s.length()];
+        dp[0] = 1;
+        int maxDp = 1;
+        for (int i = 1; i < s.length(); i++) {
+            int j;
+            for (j = i - 1; j > i - dp[i - 1] - 1; j--) {
+                if (s.charAt(i) == s.charAt(j)) break;
+            }
+            dp[i] = i - j;
+            maxDp = maxDp > dp[i] ? maxDp : dp[i];
+        }
+        return maxDp;
     }
 
     private static int longestSubstringWithoutDuo(String str) {
@@ -45,7 +85,7 @@ public class 面试题48_JZ48_最长不含重复字符的子字符串 {
         return maxDp;
     }
 
-    public int lengthOfLongestSubstring(String s) {
+    public static int lengthOfLongestSubstring(String s) {
         if (s == null || s.length() == 0) return -1;
         //以i结尾 从0到i 不含重复字符的子字符串最大长度=dp[i]
         int[] dp = new int[s.length()];

@@ -11,7 +11,7 @@ public class 面试题39_JZ39_数组中出现次数超过一半的数字 {
         int num = array[0], time = 1, count = 0;
 
         for (int i = 1; i < array.length; i++) {
-            time = num == array[i] ? time + 1 : time - 1;//一换一原则
+            time = num == array[i] ? time + 1 : time - 1;//一换一 原则
             if (time == 0) {//重置
                 num = array[i];
                 time = 1;
